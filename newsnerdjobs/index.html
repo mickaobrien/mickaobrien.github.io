@@ -1,0 +1,102 @@
+<html>
+    <head>
+        <script type="text/javascript" src="production.min.js"></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/base-min.css">
+        <link rel="stylesheet" href="jobs.css">
+    </head>
+
+    <body>
+        <div id="container">
+            <h1 id="title">NewsNerdJobs</h1>
+            <div id="jobs-list"></div>
+        </div>
+        <script id="jobs" type="text/x-handlebars-template">
+            {{#each jobs}}
+                <div class="job">
+                    <h2>{{jobtitle}}</h2>
+                    <h3 class="organization">@ {{organization}}</h3>
+                    <table>
+                        <tr>
+                            <th class="detail">Posted on:</th>
+                            <th>{{dateentered}}</th>
+                        </tr>
+                        <tr>
+                            <th class="detail">Location:</th>
+                            <th>{{citystate}}, {{country}}</th>
+                        </tr>
+                        <tr>
+                            <th class="detail">More info:</th>
+                            <th>{{moreinfo}}</th>
+                        </tr>
+                        <tr>
+                            <th class="detail">Contact:</th>
+                            <th><a href='mailto:{{contactemail}}'>{{contactperson}}, {{contactemail}}</a></th>
+                        </tr>
+                    </table>
+                </div>
+            {{/each}}
+        </script>
+    </body>
+    <script type="text/javascript">
+        init();
+
+    </script>
+</html>
+                    <!--<p class="date">Posted on: {{dateentered}}</p>-->
+                    <!--<p class="location">{{citystate}}, {{country}}</p>-->
+                    <!--<p>More info: {{moreinfo}}</p>-->
+                    <!--<p>Contact: {{contactperson}}, {{contactemail}}</p>-->
+                    <!--<p class="date">Posted on: {{dateentered}}</p>-->
+                    <!--<p class="location">{{citystate}}, {{country}}</p>-->
+                    <!--<p>More info: {{moreinfo}}</p>-->
+                    <!--<p>Contact: {{contactperson}}, {{contactemail}}</p>-->
+
+
+
+                <!--<table class="job">-->
+                    <!--<tr>-->
+                        <!--<th>Title: </th>-->
+                        <!--<th>{{jobtitle}}</th>-->
+                    <!--</tr>-->
+                <!--</table>-->
+
+
+
+                    <!--<table>-->
+                        <!--<tr>-->
+                            <!--<th class="detail">Posted on:</th>-->
+                            <!--<th>{{dateentered}}</th>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<th class="detail">Location:</th>-->
+                            <!--<th>{{citystate}}, {{country}}</th>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<th class="detail">More info:</th>-->
+                            <!--<th>{{moreinfo}}</th>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<th class="detail">Contact:</th>-->
+                            <!--<th><a href='mailto:{{contactemail}}'>{{contactperson}}, {{contactemail}}</a></th>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+
+
+
+                    <!--<p>-->
+                        <!--<span class="detail">Posted on:</span>-->
+                        <!--{{dateentered}}-->
+                    <!--</p>-->
+                    <!--<p>-->
+                        <!--<span class="detail">Location:</span>-->
+                        <!--{{citystate}}, {{country}}-->
+                    <!--</p>-->
+                    <!--<p>-->
+                        <!--<span class="detail">More info:</span>-->
+                        <!--{{moreinfo}}-->
+                    <!--</p>-->
+                    <!--<p>-->
+                        <!--<span class="detail">Contact:</span>-->
+                        <!--<a href='mailto:{{contactemail}}'>{{contactperson}}, {{contactemail}}</a>-->
+                    <!--</p>-->
