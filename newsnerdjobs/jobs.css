@@ -1,3 +1,12 @@
+a {
+    text-decoration: none;
+    color: green;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 #container {
     width: 80%;
     margin-left: auto;
@@ -17,11 +26,11 @@
 }
 
 .job {
-    /*border: solid 1px gray;*/
+    border: solid 1px gray;
     margin: 2% 0px;
     padding: 2%;
     padding-top: 0;
-    background: #D2EEBC;
+    /*background: #D2EEBC;*/
 }
 
 .date {

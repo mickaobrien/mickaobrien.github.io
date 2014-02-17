@@ -15,7 +15,7 @@
             {{#each jobs}}
                 <div class="job">
                     <h2>{{jobtitle}}</h2>
-                    <h3 class="organization">@ {{organization}}</h3>
+                    <h3 class="organization">{{organization}}</h3>
                     <table>
                         <tr>
                             <th class="detail">Posted on:</th>
@@ -27,7 +27,7 @@
                         </tr>
                         <tr>
                             <th class="detail">More info:</th>
-                            <th>{{moreinfo}}</th>
+                            <th>{{{linkify moreinfo}}}</th>
                         </tr>
                         <tr>
                             <th class="detail">Contact:</th>

@@ -1,12 +1,26 @@
 var KEY = '0AmqohgGX3YQadE1VSktrWG1nNFF6RUFNT1RKa0k0a2c',
     ALL_DATA;
+
+function urlify(text) {
+    //Replace any URL in text with a link
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(urlRegex, function(url) {
+                    return '<a href="' + url + '">' + url + '</a>';
+        })
+}
+
+
 function init() {
+
+    Handlebars.registerHelper('linkify', function(moreinfo) {
+        return new Handlebars.SafeString(urlify(moreinfo));
+    });
     Tabletop.init({key: KEY,
                    callback: processData,
                    simpleSheet: true, 
                    wanted: ['Listings'] 
         } 
-    )
+    );
 }
 
 function processData(data, tabletop) {
@@ -37,3 +51,4 @@ function isUrl(s) {
     var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)? (\/|\/([\w#!:.?+=&%@!\-\/]))?/
     return regexp.test(s);
 }
+

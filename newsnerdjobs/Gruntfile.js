@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         },
         watch: {
             scripts: {
-                files: ['js/*.js', 'test.html', 'jobs.css'],
+                files: ['js/*.js', 'index.html', 'jobs.css'],
                 tasks: ['concat', 'uglify'],
                 options: {
                     livereload: true,
