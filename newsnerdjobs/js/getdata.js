@@ -15,10 +15,13 @@ function init() {
     Handlebars.registerHelper('linkify', function(moreinfo) {
         return new Handlebars.SafeString(urlify(moreinfo));
     });
+
     Tabletop.init({key: KEY,
                    callback: processData,
                    simpleSheet: true, 
-                   wanted: ['Listings'] 
+                   wanted: ['Listings'],
+                   orderby: 'dateentered',
+                   reverse: true
         } 
     );
 }
