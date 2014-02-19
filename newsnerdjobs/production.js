@@ -16,6 +16,17 @@ function init() {
         return new Handlebars.SafeString(urlify(moreinfo));
     });
 
+    Handlebars.registerHelper('formatDate', function(dateString) {
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
+            dateSplit = dateString.split("/"),
+            monthNumber = dateSplit[0]-1,
+            day = dateSplit[1],
+            year = dateSplit[2],
+            cleanDate = monthNames[monthNumber] + " " + day + ", " + year;
+
+        return new Handlebars.SafeString(cleanDate);
+    });
+
     Tabletop.init({key: KEY,
                    callback: processData,
                    simpleSheet: true, 
