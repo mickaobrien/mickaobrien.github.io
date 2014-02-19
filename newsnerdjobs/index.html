@@ -16,24 +16,23 @@
                 <div class="job">
                     <h2>{{jobtitle}}</h2>
                     <h3 class="organization">{{organization}}</h3>
-                    <table>
-                        <tr>
-                            <th class="detail">Posted on:</th>
-                            <th>{{dateentered}}</th>
-                        </tr>
-                        <tr>
-                            <th class="detail">Location:</th>
-                            <th>{{citystate}}, {{country}}</th>
-                        </tr>
-                        <tr>
-                            <th class="detail">More info:</th>
-                            <th>{{{linkify moreinfo}}}</th>
-                        </tr>
-                        <tr>
-                            <th class="detail">Contact:</th>
-                            <th><a href='mailto:{{contactemail}}'>{{contactperson}}, {{contactemail}}</a></th>
-                        </tr>
-                    </table>
+                        <div class="detail">
+                            <span class="key">Posted on:</span>
+                            <span class="value">{{dateentered}}</span>
+                        </div>
+                        <div class="detail">
+                            <span class="key">Location:</span>
+                            <span class="value">{{citystate}}, {{country}}</span>
+                        </div>
+                        <div class="detail">
+                            <span class="key">More info:</span>
+                            <span class="value">{{{linkify moreinfo}}}</span>
+                        </div>
+                        <div class="detail">
+                            <span class="key">Contact:</span>
+                            <span class="value">{{contactperson}} 
+                               (<a href='mailto:{{contactemail}}'>{{contactemail}}</a>)</span>
+                        </div>
                 </div>
             {{/each}}
         </script>
@@ -55,31 +54,31 @@
 
 
                 <!--<table class="job">-->
-                    <!--<tr>-->
-                        <!--<th>Title: </th>-->
-                        <!--<th>{{jobtitle}}</th>-->
-                    <!--</tr>-->
+                    <!--<div>-->
+                        <!--<div>Title: </div>-->
+                        <!--<div>{{jobtitle}}</div>-->
+                    <!--</div>-->
                 <!--</table>-->
 
 
 
                     <!--<table>-->
-                        <!--<tr>-->
-                            <!--<th class="detail">Posted on:</th>-->
-                            <!--<th>{{dateentered}}</th>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<th class="detail">Location:</th>-->
-                            <!--<th>{{citystate}}, {{country}}</th>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<th class="detail">More info:</th>-->
-                            <!--<th>{{moreinfo}}</th>-->
-                        <!--</tr>-->
-                        <!--<tr>-->
-                            <!--<th class="detail">Contact:</th>-->
-                            <!--<th><a href='mailto:{{contactemail}}'>{{contactperson}}, {{contactemail}}</a></th>-->
-                        <!--</tr>-->
+                        <!--<div>-->
+                            <!--<div class="detail">Posted on:</div>-->
+                            <!--<div>{{dateentered}}</div>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                            <!--<div class="detail">Location:</div>-->
+                            <!--<div>{{citystate}}, {{country}}</div>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                            <!--<div class="detail">More info:</div>-->
+                            <!--<div>{{moreinfo}}</div>-->
+                        <!--</div>-->
+                        <!--<div>-->
+                            <!--<div class="detail">Contact:</div>-->
+                            <!--<div><a href='mailto:{{contactemail}}'>{{contactperson}}, {{contactemail}}</a></div>-->
+                        <!--</div>-->
                     <!--</table>-->
 
 

@@ -28,34 +28,40 @@ a:hover {
     margin: 2% 0px;
     padding: 2%;
     padding-top: 0;
+    /*width: 100%;*/
     /*background: #D2EEBC;*/
 }
 
-.date {
-}
-
-table {
-    width: 100%;
+/*table {*/
+    /*width: 100%;*/
     /*word-wrap: break-word;*/
     /*word-break: break-all;*/
     /*table-layout: fixed;*/
-}
+/*}*/
 
-th {
-    font-weight: normal;
-    padding: 2px 4px;
+/*th {*/
+    /*font-weight: normal;*/
+    /*padding: 2px 4px;*/
     /*border: solid 1px gray;*/
-    border-top: solid 1px gray;
-    border-bottom: solid 1px gray;
+    /*border-top: solid 1px gray;*/
+    /*border-bottom: solid 1px gray;*/
+/*}*/
+
+.detail {
+    display: inline-block;
+    width: 100%;
 }
 
-th.detail {
+.key {
     width: 10%;
+    /*float: left;*/
     font-weight: bold;
-    text-align: right;
+    /*text-align: right;*/
 }
 
-th.value {
+.value {
+    width: 90%;
+    /*float: left;*/
     text-align: left;
     word-wrap: break-word;
     word-break: break-all;
