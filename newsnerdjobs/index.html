@@ -8,8 +8,15 @@
 
     <body>
         <div id="container">
-            <h1 id="title">NewsNerdJobs</h1>
-            <div id="jobs-list"></div>
+            <div id="title">
+                <h1>NewsNerdJobs</h1>
+                <span>(A slightly easier to read version of the data found <a href="https://docs.google.com/spreadsheet/ccc?key=0AmqohgGX3YQadE1VSktrWG1nNFF6RUFNT1RKa0k0a2c&authkey=CK7OlpsI&hl=en_US#gid=0">here</a>. Built using <a href="https://github.com/jsoma/tabletop">tabletop.js</a>, mostly for my own entertainment.)</span>
+            </div>
+            <div id="jobs-list">
+                <div id="loading">
+                    <img src="spinner.gif" />
+                </div>
+            </div>
         </div>
         <script id="jobs" type="text/x-handlebars-template">
             {{#each jobs}}

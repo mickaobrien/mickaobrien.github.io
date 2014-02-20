@@ -41,7 +41,7 @@ function processData(data, tabletop) {
     ALL_DATA = data;
     var source = $('#jobs').html(),
         template = Handlebars.compile(source);
-
+    $('#loading').hide();
     $('#jobs-list').append(template({"jobs":ALL_DATA}));
 }
 

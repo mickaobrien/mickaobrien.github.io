@@ -13,6 +13,16 @@ a:hover {
     margin-right: auto;
 }
 
+#loading {
+    width: 100%;
+}
+
+#loading img {
+    position: relative;
+    left: 40%;
+    top: 20px;
+}
+
 #jobs-list {
     width: 100%;
     margin: 0;
@@ -20,7 +30,12 @@ a:hover {
 
 #title {
     text-align: center;
+    padding-bottom: 2px;
     border-bottom: solid 2px green;
+}
+
+#title h1 {
+    margin-bottom: 0;
 }
 
 .job {
