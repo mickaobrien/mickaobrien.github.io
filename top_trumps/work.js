@@ -49,21 +49,16 @@ function cleanPercent(perc) {
     return parseFloat(parseFloat(perc).toFixed(2));
 }
 
-var politicians;
-var c,p;
 var TopTrumps = Ractive.extend({
     el: "container",
     template: "#template",
 
     init: function() {
         var self = this;
-        getCards()
-        .then(dealCards)
-        .then(function(cards){
-            self.set('cards', cards);
-            self.set('cards.draw', []);
-            c = self.get('cards.computer');
-            p = self.get('cards.player');
+        $.getJSON('superheroes.json', function(data) {
+            self.set('superheroes', data);
+            self.set('cards.player', data[1:5]);
+            self.set('cards.computer', data[6:10]);
         });
     },
     reset: function() {
