@@ -43,9 +43,8 @@
     </script>
     <script type="text/ractive" id="card">
         <div class="card">
-            <h2 class="name {{getClassName(party)}}">{{name}}</h2>
-            <div class="party">{{party}} ({{constituency}})</div>
-            <img src="{{image}}" />
+            <h2 class="name">{{name}}</h2>
+            <img src="{{img}}" />
             <div class = "attributes">
                 {{#attributes:j}}
                 <div class="attribute {{ j===selected ? 'selected' : ''  }}" 
