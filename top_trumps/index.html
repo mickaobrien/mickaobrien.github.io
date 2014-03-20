@@ -17,9 +17,6 @@
               {{#player.slice(0,1):i}}
                 {{>card}}
               {{/player}}
-              {{#each player.slice(0,1)}}
-                {{@key}} - {{this}}
-              {{/player}}
             </div>
           </div>
           <div class="divider grid-2">Vs.</div>
@@ -45,6 +42,9 @@
         {{/cards}}
     </script>
     <script type="text/ractive" id="card">
+      {{#attributes}}
+        {{@key}} - {{this}}
+      {{/attributes}}
       <div class="card">
         <h2 class="name">{{name}}</h2>
         <img src="{{img}}" />
