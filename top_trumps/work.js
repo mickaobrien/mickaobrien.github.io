@@ -57,8 +57,8 @@ var TopTrumps = Ractive.extend({
         var self = this;
         $.getJSON('superheroes.json', function(data) {
             self.set('superheroes', data);
-            self.set('cards.player', data[1:5]);
-            self.set('cards.computer', data[6:10]);
+            self.set('cards.player', data.slice(0,5));
+            self.set('cards.computer', data.slice(5,10));
         });
     },
     reset: function() {
