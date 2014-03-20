@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Superhero Top Trumps</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="Ractive.min.js"></script>
+    <script src="Ractive-events-tap.min.js"></script>
+</head>
+
+<body>
+
+    <div id="container"></div>
+
+    <script type="text/ractive" id="template">
+        {{#cards}}
+            <div class="deck">
+                <h6>{{#player}}|{{/player}} {{player.length}} cards</h6>
+                <div class="player">
+                    {{#player.slice(0,1):i}}
+                        {{>card}}
+                    {{/player}}
+                </div>
+            </div>
+            <div class="divider grid-2">Vs.</div>
+            <div class="grid-4 deck">
+                <h6>{{#computer}}|{{/computer}} {{computer.length}} cards</h6>
+                <div class="computer">
+                    {{#computer.slice(0,1):i}}
+                        {{>card}}
+                    {{/computer}}
+                <div class="card-back"></div>
+                </div>
+            </div>
+            <div class="grid-4 draw">
+                <h6>
+                {{#draw.length}}
+                    DRAW: 
+                {{/draw.length}}
+                {{#draw}}
+                    |
+                {{/draw}}
+                </h6>
+            </div>
+        {{/cards}}
+    </script>
+    <script type="text/ractive" id="card">
+        <div class="card">
+            <h2 class="name {{getClassName(party)}}">{{name}}</h2>
+            <div class="party">{{party}} ({{constituency}})</div>
+            <img src="{{image}}" />
+            <div class = "attributes">
+                {{#attributes:j}}
+                <div class="attribute {{ j===selected ? 'selected' : ''  }}" 
+                    on-tap="select:{{j}}">
+                    <span class="label">{{formatLabel(label)}}: </span> 
+                    <span class="value">{{formatValue(label, value)}}</span> 
+                </div>
+                {{/attributes}}
+            </div>
+        </div>
+    </script>
+</body>
+</html>
