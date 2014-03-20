@@ -42,18 +42,26 @@
         {{/cards}}
     </script>
     <script type="text/ractive" id="card">
-      {{#attributes}}
-        {{@key}} - {{this}}
-      {{/attributes}}
       <div class="card">
         <h2 class="name">{{name}}</h2>
         <img src="{{img}}" />
         <div class = "attributes">
-          {{#attributes:j}}
           <div class="attribute {{ j===selected ? 'selected' : ''  }}" 
               on-tap="select:{{j}}">
-              <span class="label">{{formatLabel(label)}}: </span> 
-              <span class="value">{{formatValue(label, value)}}</span> 
+              {{#attributes}}
+              <span class="label">Strength: </span> 
+              <span class="value">{{strength}}</span> 
+              <span class="label">Power: </span> 
+              <span class="value">{{power}}</span> 
+              <span class="label">Intelligence: </span> 
+              <span class="value">{{intelligence}}</span> 
+              <span class="label">Combat: </span> 
+              <span class="value">{{combat}}</span> 
+              <span class="label">Speed: </span> 
+              <span class="value">{{speed}}</span> 
+              <span class="label">Durability: </span> 
+              <span class="value">{{durability}}</span> 
+              {{/attributes}}
           </div>
         {{/attributes}}
         </div>
