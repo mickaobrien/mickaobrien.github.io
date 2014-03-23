@@ -1,76 +1,46 @@
 // Define the formatting for labels and values based of JSON keys
-var FORMATTING = {
-    "terms": {"label": "Number of terms",
-              "format": function(value) {return value;}},
-    "years": {"label": "Years in the Oireachtas",
-              "format": function(value) {return value;}},
-    "attendance": {"label": "Attendance in 2013",
-                   "format": function(value) {return value + " days";}},
-    "questions": {"label": "Questions asked on Dailwatch",
-                  "format": function(value) {return value;}},
-    "percent_answered": {"label": "% of questions answered",
-                         "format": function(value) {
-                             if (isNaN(value)) {
-                                 return "N/A";
-                             }
-                             return cleanPercent(value) + "%";
-                         }},
-    "vote_present": {"label": "% of votes present for",
-                     "format": function(value) {
-                         return cleanPercent(value) + "%";
-                     }}
-},
-    LOSER = {"player": "computer", "computer": "player"},
-    CLASSNAMES = {
-    "Fine Gael": "fine-gael",
-    "Fianna Fáil": "fianna-fail",
-    "Labour": "labour",
-    "Sinn Féin": "sinn-fein",
-    "Independent": "independent",
-    "Socialist Party": "socialist",
-    "People Before Profit Alliance/United Left Alliance": "pbp-ula" 
-},
+var NUMCARDS = 10;
+var LOSER = {"player": "computer", "computer": "player"},
     ANIMATIONS = {
         "player": {
-            "player": {marginLeft: "-50%", opacity: 0},
-            "computer": {marginLeft: "-150%", opacity: 0}
+            "player": {marginLeft: "-50%", marginRight: "50%", opacity: 0},
+            "computer": {marginLeft: "-150%", marginRight: "150%", opacity: 0}
         },
         "computer": {
-            "player": {marginLeft: "150%", opacity: 0},
-            "computer": {marginLeft: "50%", opacity: 0}
+            "player": {marginLeft: "150%", marginRight: "-150%", opacity: 0},
+            "computer": {marginLeft: "50%", marginRight: "-50%", opacity: 0}
         },
         "draw": {
-            "player": {marginLeft: "25%", marginTop: "25%", opacity: 0},
-            "computer": {marginLeft: "-25%", marginTop: "25%", opacity: 0}
+            "player": {marginLeft: "25%", marginRight: "-25%", opacity: 0},
+            "computer": {marginLeft: "-25%", marginRight: "25%", opacity: 0}
         }
     };
 
-function cleanPercent(perc) {
-    return parseFloat(parseFloat(perc).toFixed(2));
-}
-
+var cards = shuffle(superheroes);
+var deal = dealCards(cards);
 var TopTrumps = Ractive.extend({
     el: "container",
     template: "#template",
+    debug: true,
 
     init: function() {
-        var self = this;
-        $.getJSON('superheroes.json', function(data) {
-            self.set('superheroes', data);
-            self.set('cards.player', data.slice(0,5));
-            self.set('cards.computer', data.slice(5,10));
-        });
+        this.set('cards', dealCards(superheroes));
+        this.set('cards.draw', []);
+        preload($.map(this.get('cards.player'), function(c){return c.img}));
+        //var self = this;
+        //$.getJSON('superheroes.json', function(data) {
+        //});
     },
     reset: function() {
         this.set('selected', -1);
-        $('.card').css({marginLeft: 0, marginTop: 0, opacity: 1})
+        $('.card').css({margin: 0, opacity: 1})
     },
-    modifyArrays: false
+    //modifyArrays: false
 });
 
 var ractive = new TopTrumps({
         data: {
-            selected: -1,
+            selected: '',
             formatValue: function(label, value) {
                 return FORMATTING[label].format(value);
             },
@@ -84,10 +54,10 @@ var ractive = new TopTrumps({
 });
 
 ractive.on({
-    select: function(e, count) {
-        this.set('selected', count);
+    select: function(e, key) {
+        this.set('selected', key);
         $('.card-back').hide();
-        var winner = compare(count);
+        var winner = compare(key);
         var self = this;
         window.setTimeout(function() {
             var animation = ANIMATIONS[winner];
@@ -134,7 +104,7 @@ function createEventListeners() {
 function getCards() {
     return $.get('/api/top-trumps', function(politicians) {
         var image_paths = $.map(politicians, function(p) {
-            return p.image;
+            return p.img;
         });
         preload(image_paths);
         politicians.forEach(group_attributes);
@@ -148,9 +118,8 @@ function preload(images) {
 };
 
 function dealCards(cards) {
-    var numCards = cards.length/2,
-        playerCards = cards.splice(0, numCards),
-        computerCards = cards;
+    var playerCards = cards.slice(0, NUMCARDS);
+    var computerCards = cards.slice(NUMCARDS, 2*NUMCARDS);
 
     return {"player": playerCards, "computer": computerCards};
 }
@@ -174,10 +143,12 @@ function group_attributes(politician) {
     return politician;
 }
 
-function compare(count) {
-    var playerValue = setNaNToZero(p[0].attributes[count].value),
-        computerValue = setNaNToZero(c[0].attributes[count].value),
-        winner;
+function compare(key) {
+    var playerAttributes = ractive.get('cards.player.0.attributes');
+    var playerValue = playerAttributes[key];
+    var computerAttributes = ractive.get('cards.computer.0.attributes');
+    var computerValue = computerAttributes[key];
+    var winner;
 
     if (playerValue === computerValue) {
         winner = 'draw';
@@ -218,5 +189,8 @@ function settleUp(winner) {
         winnersCards.push(winnersCards.shift(), losersCards.shift());
     }
     ractive.update('cards');
-    console.log($.map([0,1,2,3,4,5],compare));
+}
+
+function shuffle(cards) {
+    return cards.sort(function() { return 0.5  - Math.random() });
 }

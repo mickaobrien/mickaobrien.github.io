@@ -1,0 +1,72 @@
+#container {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.deck {
+  width: 25%;
+  float: left;
+  margin: 0 20px;
+}
+
+.card {
+  float: left;
+  outline: 1px solid #777;
+}
+
+.card img {
+  width: 165px;
+  height: 240px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 8px;
+}
+
+.name {
+  font-size: 1.6em;
+  text-align: center;
+}
+
+.attribute {
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+}
+
+.attribute:nth-of-type(odd) {
+  background-color: #ded;
+}
+
+.attribute:hover {
+  background-color: yellow;
+}
+
+.selected {
+  background-color: yellow !important;
+}
+
+
+.label {
+  float: left;
+  padding-left: 4px;
+}
+
+.value {
+  float: right;
+  padding-right: 4px;
+}
+
+.divider {
+  width: 20%;
+  height: 200px;
+  display:block;
+  float: left;
+  text-align: center;
+}
+
+.draw {
+  border: 1px solid gray;
+  top: 200px;
+}

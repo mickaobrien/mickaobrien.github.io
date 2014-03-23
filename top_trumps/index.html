@@ -3,6 +3,12 @@
 <head>
     <title>Superhero Top Trumps</title>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <link rel="stylesheet" href="cards.css">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <!--<script src="Ractive.min.js"></script>-->
+    <script src="all_superheroes.js"></script>
+    <script src="ractive.js"></script>
+    <script src="Ractive-events-tap.min.js"></script>
 </head>
 
 <body>
@@ -15,61 +21,45 @@
             <h6>{{#player}}|{{/player}} {{player.length}} cards</h6>
             <div class="player">
               {{#player.slice(0,1):i}}
-                {{>card}}
+                {{>hero}}
               {{/player}}
             </div>
           </div>
-          <div class="divider grid-2">Vs.</div>
+          <div class="divider grid-2">
+            Vs.
+            {{#draw.length}}
+              <div class="draw">
+                  DRAW <br>
+                  {{draw.length}} cards
+              </div>
+            {{/draw.length}}
+          </div>
           <div class="grid-4 deck">
             <h6>{{#computer}}|{{/computer}} {{computer.length}} cards</h6>
             <div class="computer">
               {{#computer.slice(0,1):i}}
-                {{>card}}
+                {{>hero}}
               {{/computer}}
             <div class="card-back"></div>
             </div>
           </div>
-          <div class="grid-4 draw">
-            <h6>
-              {{#draw.length}}
-                DRAW: 
-              {{/draw.length}}
-              {{#draw}}
-                |
-              {{/draw}}
-            </h6>
-          </div>
         {{/cards}}
     </script>
-    <script type="text/ractive" id="card">
+    <script type="text/ractive" id="hero">
       <div class="card">
-        <h2 class="name">{{name}}</h2>
-        <img src="" />
+        <div class="name">{{name}}</div>
+        <img src="{{img}}" />
         <div class = "attributes">
-          <div class="attribute {{ j===selected ? 'selected' : ''  }}" 
-              on-tap="select:{{j}}">
-              {{#attributes}}
-              <span class="label">Strength: </span> 
-              <span class="value">{{strength}}</span> 
-              <span class="label">Power: </span> 
-              <span class="value">{{power}}</span> 
-              <span class="label">Intelligence: </span> 
-              <span class="value">{{intelligence}}</span> 
-              <span class="label">Combat: </span> 
-              <span class="value">{{combat}}</span> 
-              <span class="label">Speed: </span> 
-              <span class="value">{{speed}}</span> 
-              <span class="label">Durability: </span> 
-              <span class="value">{{durability}}</span> 
-              {{/attributes}}
-          </div>
-        {{/attributes}}
+          {{#attributes:key}}
+            <div class="attribute {{ key===selected ? 'selected' : ''  }}" 
+                on-tap="select:{{key}}">
+                <span class="label">{{key}}: </span> 
+                <span class="value">{{this}}</span> 
+            </div>
+          {{/attributes}}
         </div>
       </div>
     </script>
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="Ractive.min.js"></script>
-    <script src="Ractive-events-tap.min.js"></script>
     <script src="work.js"></script>
 </body>
 </html>
