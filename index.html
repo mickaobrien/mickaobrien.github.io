@@ -1,12 +1,77 @@
 <html>
-    <head>
-        <style type="text/css">
-            h1 {width:100%; text-align: center;}
-            a {text-decoration: none; color: green;} 
-            a:hover {color: #666666;}
-        </style>
-    </head>
-    <body>
-        <a href='mailto:mick@mick.mx'><h1>Hi</h1></a>
-    </body>
+  <head>
+    <link rel="stylesheet" href="base.css">
+    <style type="text/css">
+      * { box-sizing: border-box; }
+      #main {
+        width: 90%;
+        margin: 0 auto;
+      }
+
+      h1 {width:100%; text-align: center;}
+      a {text-decoration: none; color: green;} 
+      a:hover {color: #666666;}
+
+      .project {
+        position: relative;
+      }
+
+      .project:hover {
+        
+      }
+
+      .project img {
+        max-width: 100%;
+        height: auto;
+        border: 0;
+        vertical-align: middle;
+      }
+
+      .title {
+        font-size: 3vmax;
+        position: absolute;
+        text-align: center;
+        width: 95%;
+        min-height: 25%;
+        bottom: 0;
+        background:rgba(1,0,0,0.8);
+        color: white;
+      }
+
+
+
+    </style>
+  </head>
+  <body>
+    <a href='mailto:mick@mick.mx'><h1>Hi</h1></a>
+    <div id='main'>
+      <div id='projects'>
+        <div  class='grid'>
+          <div class='project unit half'>
+            <a href = 'http://www.dailwatch.ie/radar'>
+              <img src='images/radar.png'>
+              <span class='title'>Dailwatch Radar</span>
+            </a>
+          </div>
+
+          <div class='project unit half'>
+            <a href = 'http://www.dailwatch.ie/top-trumps'>
+              <img src='images/toptrumps.png'>
+              <span class='title'>Dailwatch Top Trumps</span>
+            </a>
+          </div>
+        </div>
+
+        <div  class='grid'>
+          <div class='project unit half'>
+            <a href = 'http://thewitoftheirishtimes.tumblr.com'>
+              <img src='images/wit.png'>
+              <span class='title'>The Wit of The Irish Times</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </body>
 </html>
