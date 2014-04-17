@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+  /* ColorBrewer */
+  .q0-6{fill:rgb(237,248,251)} 
+  .q1-6{fill:rgb(191,211,230)} 
+  .q2-6{fill:rgb(158,188,218)} 
+  .q3-6{fill:rgb(140,150,198)} 
+  .q4-6{fill:rgb(136,86,167)} 
+  .q5-6{fill:rgb(129,15,124)}
+
+  #chart, #selection {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  svg {
+    position: relative;
+  }
+
+  #info {
+    position: absolute;
+    background: white;
+    border: 1px solid #eee;
+    padding: 2px 8px;
+  }
+  #info.show {
+    display: block;
+    z-index: 1;
+  }
+  #info.hide{ display:none; }
+
+  .year {
+    list-style: none;
+    float: left;
+    padding: 2px 8px;
+    background: steelblue;
+    margin: 0 2px;
+    color: #eee;
+  }
+  #active {
+    background: #444;
+    cursor: default;
+  }
+
+  .year, .dot {
+    cursor: pointer;
+  }
+  .dot, .legend {
+    opacity: 0.5;
+  }
+
+  .england { fill: red;}
+  .wales {fill: green; }
+  .london {fill: blue;}
+
+  .axis {
+    fill: none;
+    stroke: black;
+    stroke-width: 1px;
+  }
+
+  .tick {
+    stroke-width: 0;
+    fill: black;
+  }
+
+  .label, .title {
+    fill: black;
+    stroke-width: 0px;
+    font-size: 3vmin;
+  }
+</style>
+<body>
+  <div id='selection'>
+    <ul id='years'>
+    </ul>
+  </div>
+  <div id='chart'>
+    <div id='info' class='hide'>
+    </div>
+  </div>
+</body>
+<script src="d3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+
+  var aspectRatio = 0.52;
+  var margin = {top: 20, right: 40, bottom: 60, left: 40};
+  var width = parseInt(d3.select('#chart').style('width'), 10);
+  width = width - margin.left - margin.right;
+
+  var height = window.innerHeight - margin.bottom;
+  height = height - margin.top - margin.bottom;
+
+  // setup x 
+  var xValue = function(d) { return d.earnings;}, 
+      xScale = d3.scale.linear().domain([0,50000]).range([0, width]), 
+      xMap = function(d) { return xScale(xValue(d));}, 
+      xAxis = d3.svg.axis()
+                .ticks(Math.max(width/50, 2))
+                .tickFormat(function(d) {return d/1000;})
+                .scale(xScale).orient('bottom');
+                  
+  // setup y
+  var yValue = function(d) { return d.price;}, 
+      yScale = d3.scale.linear().domain([0,1000000]).range([height, 0]), 
+      yMap = function(d) { return yScale(yValue(d));}, 
+      yAxis = d3.svg.axis().scale(yScale).orient('left')
+                .tickFormat(function(d) {return d/1000;})
+                .ticks(Math.max(height/50, 2));
+
+  var svg = d3.select('#chart').append('svg')
+              .attr('width', width + margin.left + margin.right)
+              .attr('height', height + margin.top + margin.bottom)
+              .append('g')
+              .attr('transform', 'translate(' + margin.left + ',' + margin.right + ')');
+
+  d3.select(window).on('resize', resize);
+
+  // hide info box if click outside circle
+  $(window).on('mouseup', function(e) {
+    if (!$(e.target).is('circle')) {
+      d3.select('#info').attr('class','hide');
+    }
+  });
+
+
+  function resize() {
+    d3.select('#info').attr('class','hide');
+    width = parseInt(d3.select('#chart').style('width'), 10);
+    width = width - margin.left - margin.right;
+    height = window.innerHeight - margin.bottom;
+    height = height - margin.top - margin.bottom;
+    d3.select('#chart').style('height', height);
+    xScale.range([0, width]);
+    yScale.range([height, 0]);
+
+    d3.select(svg.node().parentNode)
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom);
+
+    //title
+    svg.select('.title')
+       .attr('x', (width / 2));
+
+    //legend
+    legHeight = Math.min(height/8,20);
+    svg.selectAll('rect')
+       .attr('x', width/15)
+       .attr('y', function(d,i) {return 1.1*i*legHeight;})
+       .attr('height', legHeight)
+       .attr('width', legHeight);
+
+    svg.selectAll('.legend-text')
+       .attr('x', width/15 + legHeight)
+       .attr('y', function(d,i) {return (i+0.9)*legHeight});
+
+    //ticks
+    xAxis.ticks(Math.max(width/50, 2));
+    yAxis.ticks(Math.max(height/50, 2));
+
+    //x-axis
+    svg.select('.x.axis')
+       .attr('transform', 'translate(0,' + height + ')')
+       .call(xAxis.orient('bottom'));
+      
+    svg.select('.x.label').attr('x',width);
+    //y-axis
+    svg.select('.y.axis').call(yAxis.orient('left'));
+    //svg.select('.y.label').attr('y',height);
+
+
+    //dots
+    svg.selectAll('.dot')
+       .attr('cx', xMap)
+       .attr('cy', yMap);
+
+  }
+
+  queue()
+    .defer(d3.csv, 'earnings_data.csv')
+    .defer(d3.csv, 'prices_data.csv') 
+    .await(ready);
+
+  function ready(error, earnings, prices) {
+    var data = {};
+    var years = ['2009', '2010', '2011', '2012', '2013'];
+
+    var $list = $('#years');
+    years.forEach(function(y) {
+      var li = $('<li/>').attr('class','year').text(y);
+      $list.append(li);
+    });
+
+    $('#years li').on('click', selectYear);
+
+    function selectYear(e) {
+      var $li = $(this);
+      $('#years li').attr('id','');
+      $li.attr('id','active');
+      var year = $li.text();
+      scatter(year);
+    }
+
+    // create hash of prices by constituency year
+    var keyed_prices = {};
+    prices.forEach(function(d) {
+      for (var i=0; i<years.length; i++) {
+        var year = years[i];
+        keyed_prices[d.constituency] = keyed_prices[d.constituency] || {};
+        keyed_prices[d.constituency][year] = +d[year];
+        //data[year].push({'price': +d[year]});
+      }
+    });
+
+    // combine earnings and prices
+    earnings.forEach(function(d) {
+      for (var i=0; i<years.length; i++) {
+        var year = years[i];
+        data[year] = data[year] || [];
+        data[year].push({'constituency': d['constituency'],
+        'earnings': +d[year],
+        'price': keyed_prices[d['constituency']][year],
+        'name': d.name,
+        'place': d.location});
+      }
+    });
+
+  // x-axis
+  svg.append('g')
+      .attr('class', 'x axis')
+      .attr('transform', 'translate(0,' + height + ')')
+      .call(xAxis)
+    .append('text')
+      .attr('class', 'x label')
+      .attr('x', width)
+      .attr('y', -6)
+      .style('text-anchor', 'end')
+      .text('Earnings (£k)');
+
+  // y-axis
+  svg.append('g')
+      .attr('class', 'y axis')
+      .call(yAxis)
+    .append('text')
+      .attr('class', 'y label')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 6)
+      .attr('dy', '.71em')
+      .style('text-anchor', 'end')
+      .text('House Price (£000k)');
+
+    //title
+    svg.append('text')
+        .attr('x', (width / 2))             
+        .attr('y', 0 - (margin.top / 2))
+        .attr('class', 'title')
+        .attr('text-anchor', 'middle')  
+        .text('Median House Prices vs. Median Annual Earnings for Constituencies in England and Wales');
+
+    //legend
+    var legend = svg.append('g');
+              //.attr('x', (width/5))
+              //.attr('y', 0 - (margin.top))
+              //.attr('width', 40)
+              //.attr('height', 100);
+
+    var legHeight = Math.min(height/8, 20);
+    legend.selectAll('rect')
+          .data(['london', 'england', 'wales'])
+          .enter()
+          .append('rect')
+          .attr('class', function(d) {  return 'legend ' + d; })
+          .attr('x', width/15)
+          .attr('y', function(d,i) {return 1.1*i*legHeight;})
+          .attr('height', legHeight)
+          .attr('width', legHeight);
+
+    legend.selectAll('text')
+          .data(['london', 'england', 'wales'])
+          .enter()
+          .append('text')
+          .attr('class','label legend-text')
+          .text(function(d) { return capitaliseFirstLetter(d);})
+          .attr('x', width/15 + legHeight)
+          .attr('y', function(d,i) {return (i+0.9)*legHeight});
+
+
+    //scatter plot
+    function scatter(year) {
+      var dots = svg.selectAll('.dot')
+         .data(data[year], function(d) { return d.constituency;})
+
+         //update
+       dots.transition()
+          .duration(750)
+          .ease('cubic')
+          .attr('cx', xMap)
+          .attr('cy', yMap)
+
+          //new data
+       dots.enter()
+         .append('circle')
+         .attr('class', function(d) {
+             return d.place + ' dot';
+         })
+         .attr('r', 4)
+         .attr('cx', xMap)
+         .attr('cy', yMap)
+         .on('click', function(d) { 
+           d3.selectAll('circle').style('stroke','');
+           self = d3.select(this);
+           self.style('stroke','darkorange');
+           self.style('stroke-width','22px');
+           var x = self.attr('cx');
+           var y = self.attr('cy');
+           var r = self.attr('r');
+           d3.select('#info')
+             .html(infoText(d))
+             .style('left', x + 'px')
+             .style('top', y*1 + 'px')
+             .attr('class', 'show');
+         });
+       }
+
+    scatter('2013');
+    $('li.year:last').attr('id','active');
+
+    function infoText(d) {
+    return '<strong>' + d.name + '</strong>' + '<br>' + 'Median Earnings: ' + formatNum(d.earnings) + '<br>Median House Price: ' + formatNum(d.price);
+    }
+
+    function formatNum(num) {
+      return '£' + d3.format(',')(num);
+    }
+
+    function capitaliseFirstLetter(string)
+    {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+  }
+
+</script>
+
+
+
+<!--<script>-->
+  <!--var width = 960,-->
+      <!--height = 500;-->
+
+  <!--var svg = d3.select('#chart').append('svg');-->
+  <!--queue()-->
+    <!--.defer(d3.json, 'simple.topo.json')-->
+    <!--.defer(d3.csv, 'final.csv') -->
+    <!--.await(ready);-->
+
+  <!--function ready(error, constituencies, data) {-->
+
+    <!--var extent = d3.extent(data, function(d) {return +d['2013'];});-->
+    <!--var quantize = d3.scale.quantize()-->
+                    <!--.domain(extent)-->
+                    <!--.range(d3.range(6).map(function(i) { return 'q' + i + '-6'; }));-->
+    <!--//create object keyed by constituency codes-->
+    <!--var ratios = {};-->
+    <!--data.forEach(function(d) {-->
+      <!--ratios[d.constituency] = d;-->
+    <!--});-->
+
+    <!--//MAP-->
+    <!--var projection = d3.geo.albers()-->
+      <!--.center([0, 55.4])-->
+      <!--.rotate([4.4, 0])-->
+      <!--.parallels([50, 60])-->
+      <!--.scale(4000)-->
+      <!--.translate([width / 2, height / 2]);-->
+
+    <!--var path = d3.geo.path().projection(projection);-->
+    <!--var c_paths = topojson.feature(constituencies, constituencies.objects.layer1).features;-->
+    <!--svg.selectAll('path')-->
+      <!--.data(c_paths)-->
+      <!--.enter()-->
+      <!--.append('path')-->
+      <!--.attr('d', path)-->
+      <!--.attr('class', 'BuPo')-->
+      <!--.attr('class', function(d) { return quantize(get_value(ratios[d.properties.id],'2009'));})-->
+      <!--.on('click', function(d) {-->
+        <!--var value = ratios[d.properties.id]['2009'];-->
+        <!--console.log(value);-->
+      <!--});-->
+
+      <!--function get_value(obj, key) {-->
+        <!--var value;-->
+        <!--try {-->
+          <!--value = obj[key];-->
+        <!--}-->
+        <!--catch (e) {-->
+          <!--value = 0;-->
+        <!--}-->
+        <!--return value;-->
+      <!--}-->
+
+  <!--}-->
+<!--</script>-->
