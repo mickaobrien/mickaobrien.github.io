@@ -72,6 +72,12 @@
     stroke-width: 0px;
     font-size: 3vmin;
   }
+
+  #footnote {
+    width: 50%;
+    margin: 0 auto;
+    font-size: 0.8em;
+  }
 </style>
 <body>
   <div id='selection'>
@@ -81,6 +87,10 @@
   <div id='chart'>
     <div id='info' class='hide'>
     </div>
+  </div>
+  <div id='footnote'>
+    House price data from <a href='http://www.landregistry.gov.uk/market-trend-data/public-data/price-paid-data/download'>Land Registry</a>, 
+    earnings data from <a href='http://www.ons.gov.uk/ons/publications/re-reference-tables.html?edition=tcm%3A77-328218'>ONS</a>
   </div>
 </body>
 <script src="d3.min.js"></script>
@@ -261,7 +271,7 @@
         .attr('y', 0 - (margin.top / 2))
         .attr('class', 'title')
         .attr('text-anchor', 'middle')  
-        .text(' House Prices vs.  Annual Earnings');
+        .text(' House Prices vs.  Annual Earnings in England and Wales');
 
     //legend
     var legend = svg.append('g');
