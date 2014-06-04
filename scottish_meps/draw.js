@@ -88,7 +88,7 @@ function createVis(error, areas, votes) {
 
         var html = '<div class="party-heading">' + party + '</div>'
                     + '<div class="party-heading ' + party.replace(' ', '')  + ' line-div"></div>'
-                    + 'Won <strong>' + seats + ' seats</strong> with ' + +(total*100).toFixed(2) + '% of votes.'
+                    + 'Won <strong>' + seats + ((seats===1) ? ' seat' : ' seats') + '</strong> with ' + +(total*100).toFixed(2) + '% of votes.'
                     + '<br>'
                     + '&nbsp;'
                     + '<br>'
