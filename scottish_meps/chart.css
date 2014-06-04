@@ -1,0 +1,65 @@
+#map {
+  display: none;
+}
+
+#party-maps {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#heading {
+  text-align: center;
+}
+
+.area {
+  stroke: #999;
+  stroke-width: 1px;
+} 
+
+.q0-9{fill:rgb(255,255,255)}
+.q1-9{fill:rgb(240,240,240)}
+.q2-9{fill:rgb(217,217,217)}
+.q3-9{fill:rgb(189,189,189)}
+.q4-9{fill:rgb(150,150,150)}
+.q5-9{fill:rgb(115,115,115)}
+.q6-9{fill:rgb(82,82,82)}
+.q7-9{fill:rgb(37,37,37)}
+.q8-9{fill:rgb(0,0,0)}
+
+.party-heading { 
+  font-weight: bold;
+  padding: 1px;
+}
+
+.line-div {
+  margin-bottom: 6px;
+  height: 4px;
+}
+
+.BNP { background-color: #00008B }
+.SNP { background-color: #FFFF00; }
+.CONSERVATIVES { background-color: #0087DC; }
+.LIBDEMS { background-color: #FDBB30; }
+.UKIP { background-color: #70147A; }
+.LABOUR { background-color: #DC241f; }
+.GREENS { background-color: #009900; }
+.BRITAINFIRST { background-color: #0000FF; }
+.NO2EU { background-color: #A9A9A9; }
+
+.party-details {
+  width: 100%;
+  float: left;
+}
+
+@media all and (min-width: 840px) {
+  .party-details {
+    width: 50%;
+    float: left;
+  }
+}
+
+.vote-details {
+  width: 50%;
+  float: left;
+}
