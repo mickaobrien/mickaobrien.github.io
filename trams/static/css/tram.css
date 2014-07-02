@@ -1,0 +1,92 @@
+#headline h1{
+  text-align: center;
+  /*border-bottom: solid 4px #8C100A;*/
+}
+
+#content, #headline h1 {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+#headline {
+  background-color: #8C100A;
+  color: #eee;
+  padding: 4px 0;
+}
+
+#images {
+  width: 100%;
+  float: left;
+}
+
+#directions {
+  height: 400px;
+}
+
+.label-wrapper {
+  float: left;
+  width: 10%;
+}
+
+.search {
+  box-sizing: border-box;
+  width: 90%;
+}
+
+#search-form {
+  width: 70%;
+  float: left;
+}
+
+#submit-button {
+  width: 100%;
+  border: none;
+  margin: 8px 0;
+  padding: 4px 0;
+  background-color: #0a8c10;
+  color: #eee;
+}
+
+#submit-button:hover {
+  background-color: #8C100A;
+}
+
+#map {
+  float: left;
+  width: 70%;
+  height: 100%;
+}
+
+#results {
+  float: left;
+  width: 30%;
+  height: 100%;
+}
+
+.tram {
+  display: none;
+  background-color: #eee;
+}
+
+.tram p {
+  text-align: center;
+  font-size: larger;
+  border-bottom: solid 2px #8C100A;
+}
+
+.tram img {
+  width: 20%;
+  height: auto;
+  margin-left: 40%;
+  padding-top: 4%;
+}
+
+.adp {
+  display: none;
+}
+
+.adp-list {
+  height: 100%;
+  padding: 0 4px;
+}
