@@ -39,12 +39,16 @@
                 var route, i;
                 updateRoutes(result['routes']);
                 result['routes'] = _.sortBy(result['routes'], function(route) { return route.total_cost; });
-                console.log(_.pluck(result['routes'], 'modes'));
-                console.log(_.pluck(result['routes'], 'cost'));
+                //console.log(_.pluck(result['routes'], 'modes'));
+                //console.log(_.pluck(result['routes'], 'cost'));
 
                 ROUTES=result;
                 directionsDisplay.setDirections(result);
+                //$('#map').show();
+                console.log('oo');
+                $('#map').css('visibility', 'visible');
                 showTramImage(0, result['routes']);
+
             }
         });
     }
