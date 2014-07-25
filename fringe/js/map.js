@@ -7,7 +7,7 @@ var Fringe = {
         $.when(this.loadStaticData())
          .then(function() { 
              var b = $('button');
-             b.text('Visualise');
+             b.text('Show Me A Day');
              b.attr('disabled', false); 
          });
         var self = this;
