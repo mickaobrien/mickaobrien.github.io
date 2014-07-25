@@ -2,7 +2,12 @@ var Fringe = {
 
     init: function() {
         this.drawMap();
-        this.loadStaticData();
+        $.when(this.loadStaticData())
+         .then(function() { 
+             var b = $('button');
+             b.text('Visualise');
+             b.attr('disabled', false); 
+         });
         var self = this;
         $('button').on('click', function(e) {
             e.preventDefault();
@@ -31,10 +36,13 @@ var Fringe = {
 
     loadStaticData: function() {
         var self = this;
+        var deferred = $.Deferred();
         d3.json('data/static_data.json', function(data) {
             self.shows = data.shows;
             self.venues = data.venues;
+            deferred.resolve();
         });
+        return deferred.promise();
     },
 
     loadDayData: function () {
@@ -110,6 +118,7 @@ var Fringe = {
             if (events.length===0) {
                 // check if any circles left
                 d3.select('#map').selectAll('circle').remove();
+                self.circles = {};
                 self.updateShowCount(0);
                 clearInterval(interval);
                 $('#show-info').html('<button>See Another Day</button>')
