@@ -63,6 +63,15 @@ button:hover {
   color: white;
 }
 
+#attributions {
+  text-align: center;
+  font-size: 0.8em;
+  background-color: white;
+  color: black;
+  margin-top: 1%;
+  padding: 2px 0;
+}
+
 #map {
   position: absolute;
   top: 0;
