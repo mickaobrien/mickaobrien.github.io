@@ -380,13 +380,13 @@ var Fringe = {
 
 function disableInteractivity(map) {
     //Disable drag and zoom handlers.
-    //map.dragging.disable();
-    //map.touchZoom.disable();
-    //map.doubleClickZoom.disable();
-    //map.scrollWheelZoom.disable();
+    map.dragging.disable();
+    map.touchZoom.disable();
+    map.doubleClickZoom.disable();
+    map.scrollWheelZoom.disable();
 
     // Disable tap handler, if present.
-    //if (map.tap) map.tap.disable();
+    if (map.tap) map.tap.disable();
 }
 
 function categoryToClass(category) {
