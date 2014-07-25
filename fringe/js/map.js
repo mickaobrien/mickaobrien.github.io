@@ -2,6 +2,8 @@ var Fringe = {
 
     init: function() {
         this.drawMap();
+
+        //Load venue and show data in the background
         $.when(this.loadStaticData())
          .then(function() { 
              var b = $('button');
@@ -9,11 +11,15 @@ var Fringe = {
              b.attr('disabled', false); 
          });
         var self = this;
+
         $('button').on('click', function(e) {
             e.preventDefault();
-            $('.animation').fadeIn();
-            $('#intro').fadeOut();
-            self.loadDayData();
+            $(this).text('Loading...');
+            $.when(self.loadDayData())
+             .then(function() {
+                $('.animation').fadeIn();
+                $('#intro').fadeOut();
+            });
         });
 
     },
@@ -50,14 +56,17 @@ var Fringe = {
         var dayNumber = Math.floor(Math.random() * 25) + 1;
 
         var dataFile = 'data/8' + dayNumber + '.json';
+        var deferred = $.Deferred();
         d3.json(dataFile, function(data) {
                self.performances = data.performances;
                self.categoryCounts = data.categories;
                self.count = data.count;
                self.busy = data.busy;
                self.date = dateTime(getTime(data.performances[0]['time'])).date;
+               deferred.resolve();
                self.animate.call(self);
         });
+        return deferred;
     },
 
     //loadData: function() {
@@ -122,10 +131,14 @@ var Fringe = {
                 self.updateShowCount(0);
                 clearInterval(interval);
                 $('#show-info').html('<button>See Another Day</button>')
+
                 $('button').on('click', function(e) {
                     e.preventDefault();
-                    self.loadDayData();
-                    $('#show-info').text('Click a show to get more info');
+                    $(this).text('Loading...');
+                    $.when(self.loadDayData())
+                     .then(function() {
+                         $('#show-info').text('Click a show to get more info');
+                     });
                 });
                 return;
             }
