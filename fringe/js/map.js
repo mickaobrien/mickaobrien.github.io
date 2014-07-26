@@ -75,7 +75,8 @@ var Fringe = {
         var busy = this.busy;
         var date = this.date;
 
-        $('#date').text(date);
+        //$('#date').text(date);
+        $('#date').html(date.day + ', <span id="month-date">' + [date.month, date.date].join(' ') + '</span>' );
         $('#total-count').text(count);
         $('#busy').text(busy);
     },
@@ -304,7 +305,8 @@ var Time = {
         var day = days[time.getDay()];
         var date = time.getDate();
         var month = months[time.getMonth()];
-        return day + ', ' + month + ' ' + date + this.ordinal(date)
+        //return day + ', ' + month + ' ' + date + this.ordinal(date)
+        return {'month': month, 'day': day, 'date': date + this.ordinal(date)}
     },
 
     getTimeString: function(time) {
