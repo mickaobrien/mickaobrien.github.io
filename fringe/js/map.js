@@ -62,38 +62,13 @@ var Fringe = {
                self.categoryCounts = data.categories;
                self.count = data.count;
                self.busy = data.busy;
-               self.date = dateTime(getTime(data.performances[0]['time'])).date;
+               //self.date = Time.dateTime(Time.getTime(data.performances[0]['time'])).date;
+               self.date = Time.getDate(data.performances[0]['time']);
                deferred.resolve();
                self.animate.call(self);
         });
         return deferred;
     },
-
-    //loadData: function() {
-        //var self = this;
-        //d3.json('data/all_data.json', function(data) {
-            //self.venues = data.venues;
-            //self.shows = data.shows;
-            //var performances = data.performances;
-            //self.performances = performances;
-
-            //self.startTime = getTime(performances[0].time);
-            //self.endTime = getTime(performances[performances.length-1].time);
-        
-        //});
-    //},
-
-    //makeAnimation: function(error, staticData, performances) {
-        //this.shows = staticData.shows;
-        //this.venues = staticData.venues;
-
-         ////Initialise svg
-        //var map = this.map;
-        //console.log(this);
-        //map._initPathRoot();
-
-        //this.animate(performances);
-    //},
 
     setDayInfo: function() {
         var count = this.count;
@@ -117,7 +92,7 @@ var Fringe = {
 
         var updateMap = this.updateMap;
 
-        var currentTime = getTime(events[0].time);
+        var currentTime = Time.getTime(events[0].time);
 
         var interval = setInterval(function() {
             if (new Date(currentTime).getMinutes() % 5 === 0) {
@@ -144,7 +119,7 @@ var Fringe = {
             }
 
 
-            if(currentTime===getTime(events[0].time)) {
+            if(currentTime===Time.getTime(events[0].time)) {
                 event = events.shift();
                 event['events']['start'].forEach(function(e) {
                     circles[e.uid] = e;
@@ -155,7 +130,7 @@ var Fringe = {
                 updateMap.call(self, d3.entries(circles));
                 self.updateShowCount(Object.keys(circles).length);
             }
-            currentTime = addMinutes(currentTime, 1);
+            currentTime = Time.addMinutes(currentTime, 1);
 
         }, 300/6);
         this.interval = interval;
@@ -179,8 +154,8 @@ var Fringe = {
     },
 
     updateTime: function(time) {
-        dateObj = dateTime(time);
-        $('#current-time').text(dateObj.time);
+        var time = Time.getTimeString(time);
+        $('#current-time').text(time);
     },
 
     updateShowCount: function(count) {
@@ -236,75 +211,6 @@ var Fringe = {
 
     circles: {},
 
-    d3Shit: function() {
-        var map = this.map;
-        map._initPathRoot();
-        var svg = d3.select('#map').select('svg');
-        var g = svg.append('g');
-
-        var venues = this.venues;
-        var shows = this.shows;
-        var circles = this.circles;
-
-        function updateMap(circles) { 
-            var dots = g.selectAll('circle');
-            var radius = 6;
-            dots.data(circles, function(d) { return d.key; })
-                .enter()
-                .append('circle')
-                .attr('cx', function(d) { return map.latLngToLayerPoint([venues[d.value.v].lat, venues[d.value.v].lng]).x; })
-                .attr('cy', function(d) { return map.latLngToLayerPoint([venues[d.value.v].lat, venues[d.value.v].lng]).y; })
-                .attr('class', function(d) { return categoryToClass(shows[d.value.sid].category); })
-                .attr('r', radius);
-                //.attr('opacity', 0)
-                //.transition()
-                //.attr('opacity', 1);
-
-
-            dots.data(circles, function(d) { return d.key; })
-                .exit()
-                .transition()
-                .duration(10000/21600)
-                .attr('opacity', 0)
-                .remove();
-        }
-
-
-        var events = this.performances.slice(100);
-        var currentTime = getTime(events[0].time);
-
-        var interval = setInterval(function() {
-            if (new Date(currentTime).getMinutes() === 0) {
-                $('#time').text(dateTimeString(currentTime) + ' :: ' + Object.keys(circles).length);
-                //console.log('there are ' + Object.keys(self.circles).length + ' events on at the moment');
-            }
-
-            //if (currentTime>e) {
-            if (events.length===0) {
-                // check if any circles left
-                clearInterval(interval);
-                return;
-            }
-            if(currentTime===getTime(events[0].time)) {
-                //console.log('there are ' + events.length + ' events left...');
-                event = events.shift();
-                //addDots(event['events']['start']);
-                //removeDots(event['events']['end']);
-                event['events']['start'].forEach(function(e) {
-                    circles[e.uid] = e;
-                });
-                event['events']['end'].forEach(function(e) {
-                    delete circles[e.uid];
-                });
-                updateMap(d3.entries(circles));
-            }
-            //console.log(currentTime, getTime(events[0].time));
-            currentTime = addMinutes(currentTime, 1);
-
-        }, 1/21600);
-        this.interval = interval;
-    },
-
     addCircle: function(venue, show, uid) {
         var map = this.map;
         var circle_options = {
@@ -343,40 +249,6 @@ var Fringe = {
         this.addCircle(venue, show, uid);
     },
 
-    animate111: function() {
-        var s = this.startTime;
-        var e = this.endTime;
-        var events = this.performances.slice(100);
-        var self = this;
-        var add = this.addEvent;
-        var remove = this.removeEvent;
-
-        //var currentTime = s;
-        var currentTime = getTime(events[0].time);
-        var interval = setInterval(function() {
-            if (new Date(currentTime).getMinutes() === 0) {
-                $('#time').text(dateTimeString(currentTime));
-                console.log('there are ' + Object.keys(self.circles).length + ' events on at the moment');
-            }
-
-            //if (currentTime>e) {
-            if (events.length===0) {
-                // check if any circles left
-                clearInterval(interval);
-                return;
-            }
-            if(currentTime===getTime(events[0].time)) {
-                //console.log('there are ' + events.length + ' events left...');
-                event = events.shift();
-                event['events']['start'].forEach(add, self);
-                event['events']['end'].forEach(remove, self);
-            }
-            //console.log(currentTime, getTime(events[0].time));
-            currentTime = addMinutes(currentTime, 1);
-        }, 1/21600);
-        this.interval = interval;
-    },
-
     stop: function() {
         clearInterval(this.interval);
     },
@@ -395,8 +267,6 @@ var Fringe = {
             i++;
         }, 1000);
     }
-
-
 }
 
 
@@ -417,38 +287,46 @@ function categoryToClass(category) {
 
 Fringe.init();
 
-function ss(time){}
-function getTime(time) {
-    return Date.parse(time);
-}
-function addMinutes(date, minutes) {
-    return new Date(date + minutes*60000).getTime();
-}
-function dateTime(time) {
-    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "August", "Sep", "Oct", "Nov", "Dec"];
-    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    var time = new Date(time);
-    var day = days[time.getDay()];
-    var date = time.getDate();
-    var month = months[time.getMonth()];
-    var hours = time.getHours();
-    var minutes = time.getMinutes();
-    var suffix = (hours>=12) ? 'pm' : 'am';
-    hours = (hours>12) ? (hours-12) : hours;
-    //return day + ', ' + month + ' ' + date + ' - ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
-    return {'date': day + ', ' + month + ' ' + date + ordinal(date), 'time': hours + ':' + ('0' + minutes).slice(-2) + suffix};
-}
 
-function ordinal(date) {
-    if(date > 20 || date < 10) {
-        switch(date%10) {
-            case 1:
-                return "st";
-            case 2:
-                return "nd";
-            case 3:
-                return "rd";
+var Time = {
+    getTime: function(time) {
+        return Date.parse(time);
+    },
+
+    addMinutes: function(date, minutes) {
+        return new Date(date + minutes*60000).getTime();
+    },
+
+    getDate: function(time) {
+        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "August", "Sep", "Oct", "Nov", "Dec"];
+        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var time = new Date(time);
+        var day = days[time.getDay()];
+        var date = time.getDate();
+        var month = months[time.getMonth()];
+        return day + ', ' + month + ' ' + date + this.ordinal(date)
+    },
+
+    getTimeString: function(time) {
+        var time = new Date(time);
+        var hours = time.getHours();
+        var minutes = time.getMinutes();
+        var suffix = (hours>=12) ? 'pm' : 'am';
+        hours = (hours>12) ? (hours-12) : hours;
+        return hours + ':' + ('0' + minutes).slice(-2) + suffix;
+    },
+
+    ordinal: function(date) {
+        if(date > 20 || date < 10) {
+            switch(date%10) {
+                case 1:
+                    return "st";
+                case 2:
+                    return "nd";
+                case 3:
+                    return "rd";
+            }
         }
+        return "th";
     }
-    return "th";
 }
