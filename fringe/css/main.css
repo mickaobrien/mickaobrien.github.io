@@ -101,6 +101,7 @@ button:hover {
   background-color: rgb(238,54,96);
   color: white;
   font-size: 1.5em;
+  margin-bottom: 0.25em;
 }
 
 #month-date {
