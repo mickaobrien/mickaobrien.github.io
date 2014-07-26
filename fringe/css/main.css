@@ -143,7 +143,7 @@ button:hover {
   padding: 2px 4px;
   /*display: inline-block;*/
 }
-@media all and (min-width: 541px) {
+@media all and (min-width: 650px) {
   #legend {
     right: 0;
     top: 0;
@@ -163,7 +163,7 @@ button:hover {
   }
 }
 
-@media all and (max-width: 540px) {
+@media all and (max-width: 649px) {
   #legend {
     bottom: 40px;
     width: 100%;
