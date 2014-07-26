@@ -118,6 +118,7 @@ button:hover {
 #current-time {
   display: table-cell;
   vertical-align: middle;
+  font-size: 1.7em;
 }
 
 .updating {
