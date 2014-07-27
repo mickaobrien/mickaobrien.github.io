@@ -170,6 +170,11 @@ button:hover {
 }
 
 @media all and (max-width: 649px) {
+  #intro {
+    left: 5%;
+    width: 90%;
+  }
+
   #legend {
     bottom: 40px;
     width: 100%;
