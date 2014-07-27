@@ -10,7 +10,7 @@ body {
   background: rgb(254, 54, 96);
   text-align: center;
   color: white;
-  z-index: 1;
+  z-index: 5;
 }
 
 .animation {
@@ -33,7 +33,7 @@ body {
   /*height: 50%;*/
   width: 75%;
   background: rgba(238,54,96,0.9);
-  z-index: 1;
+  z-index: 1001;
   border: 1px solid rgb(238,54,96)
 }
 
@@ -135,13 +135,13 @@ button:hover {
 #time-info {
   position: absolute;
   /*height: 20px;*/
-  z-index: 1;
+  z-index: 5;
 }
 
 #legend {
   line-height: 0;
   position: absolute;
-  z-index: 1;
+  z-index: 5;
   background-color: rgba(0,0,0,0.6);
 }
 
@@ -171,6 +171,7 @@ button:hover {
 
 @media all and (max-width: 649px) {
   #intro {
+    top: 5%;
     left: 5%;
     width: 90%;
   }
