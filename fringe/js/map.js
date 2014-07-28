@@ -122,7 +122,7 @@
 
                     $('button').on('click', function(e) {
                         e.preventDefault();
-                        $(this).disable();
+                        $(this).attr('disabled', 'disabled');
                         $(this).text('Loading...');
                         $.when(self.loadDayData())
                          .then(function() {
