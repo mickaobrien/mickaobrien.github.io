@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>A Parcel of Rogues</title><link href="http://www.mick.mx/blog/" rel="alternate"></link><link href="http://www.mick.mx/blog/feeds/mick-obrien.atom.xml" rel="self"></link><id>http://www.mick.mx/blog/</id><updated>2014-10-04T00:00:00+02:00</updated><entry><title>Test Post</title><link href="http://www.mick.mx/blog/test-post.html" rel="alternate"></link><updated>2014-10-04T00:00:00+02:00</updated><author><name>Mick O'Brien</name></author><id>tag:www.mick.mx,2014-10-04:blog/test-post.html</id><summary type="html">&lt;p&gt;Let's do that!&lt;/p&gt;
-&lt;p&gt;Or not.&lt;/p&gt;
-&lt;p&gt;Whatever.&lt;/p&gt;</summary></entry></feed>
