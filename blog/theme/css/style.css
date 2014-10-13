@@ -65,7 +65,7 @@ section#sidebar .user_meta {
 }
 section#sidebar h1 {
   margin: 20px 20px 10px 0px;
-  padding: 0 0 0 40px;
+  padding: 0 0 0 50px;
   display: block;
   font-family: 'Proxima Nova', 'Open Sans', 'Lato', sans-serif;
   font-weight: 900;
@@ -83,7 +83,7 @@ section#sidebar h2 {
   line-height: 20px;
 }
 section#sidebar p.bio {
-  padding: 0 20px 0 40px;
+  padding: 0 20px 0 50px;
 }
 section#sidebar ul {
   margin: 50px 0 0 0;
