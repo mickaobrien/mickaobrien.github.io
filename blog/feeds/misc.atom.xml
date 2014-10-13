@@ -1,4 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>A Parcel of Rogues</title><link href="http://www.mick.mx/blog/" rel="alternate"></link><link href="http://www.mick.mx/blog/feeds/misc.atom.xml" rel="self"></link><id>http://www.mick.mx/blog/</id><updated>2014-10-04T00:00:00+02:00</updated><entry><title>Test Post</title><link href="http://www.mick.mx/blog/test-post.html" rel="alternate"></link><updated>2014-10-04T00:00:00+02:00</updated><author><name>Mick O'Brien</name></author><id>tag:www.mick.mx,2014-10-04:blog/test-post.html</id><summary type="html">&lt;p&gt;Let's do that!&lt;/p&gt;
-&lt;p&gt;Or not.&lt;/p&gt;
-&lt;p&gt;Whatever.&lt;/p&gt;</summary></entry></feed>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>A Parcel of Rogues</title><link href="http://www.mick.mx/blog/" rel="alternate"></link><link href="http://www.mick.mx/blog/feeds/misc.atom.xml" rel="self"></link><id>http://www.mick.mx/blog/</id><updated>2014-10-13T00:00:00+01:00</updated><entry><title>FFTs &amp; FOTs</title><link href="http://www.mick.mx/blog/ffts-fots.html" rel="alternate"></link><updated>2014-10-13T00:00:00+01:00</updated><author><name>Mick O'Brien</name></author><id>tag:www.mick.mx/blog,2014-10-13:ffts-fots.html</id><summary type="html">&lt;p&gt;&lt;a href="http://wfmu.org/playlists/BS"&gt;The Best Show on WFMU&lt;/a&gt; was amazing! It ended on December 17th, 2013.&lt;/p&gt;
+&lt;p&gt;One of my favourite things about the show is how the host, &lt;a href="http://www.twitter.com/scharpling"&gt;Tom Scharpling&lt;/a&gt; would take an off-the-cuff idea and run with it. Whether that was the introduction of puppets (prog-rock loving Vance and his roommate Gary the squirrel) or deciding &lt;a href="https://www.youtube.com/watch?v=nQVg0c9Rl4k"&gt;he can do impressions of anybody&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In August 2012, while discussing the song &lt;a href="http://en.wikipedia.org/wiki/Bad_Company_(song)"&gt;Bad Company&lt;/a&gt; (by the band &lt;a href="http://en.wikipedia.org/wiki/Bad_Company"&gt;Bad Company&lt;/a&gt;, from the album &lt;a href="http://en.wikipedia.org/wiki/Bad_Company_(album)"&gt;Bad Company&lt;/a&gt;), Tom decided that fading up the chorus would be a good way to dismiss boring callers. Hearing the intro to the song gently fade in as someone rambled on never failed to crack me up.&lt;/p&gt;
+&lt;p&gt;To keep me going until the show &lt;a href="https://twitter.com/scharpling/status/520563418420740096"&gt;returns&lt;/a&gt;(!), I wanted to create a supercut of these Bad Company-ings. I knew there had to be a better way than going through every episode waiting to hear this:&lt;/p&gt;
+&lt;p&gt;&lt;audio src="audio/chorus.mp3" controls&gt;&lt;/p&gt;
+&lt;p&gt;So I went looking for a way to automatically identify where the Bad Company-ing occured. It turns out what I was looking for is called the &lt;a href="https://en.wikipedia.org/wiki/Cross-correlation"&gt;cross-correlation&lt;/a&gt;. 
+It's a &lt;em&gt;"a measure of similarity of two waveforms as a function of a time-lag applied to one of them"&lt;/em&gt; and &lt;em&gt;"is commonly used for searching a long signal for a shorter, known feature"&lt;/em&gt;. 
+Perfect!&lt;/p&gt;
+&lt;p&gt;The cross-correlation of two waveforms is fairly straightforward to calculate. In Python terms:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cross_correlation&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ifft&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;fft&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;conj&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;fft&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sample&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;where &lt;code&gt;fft&lt;/code&gt; is the &lt;a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform"&gt;fast Fourier transform&lt;/a&gt;, &lt;code&gt;ifft&lt;/code&gt; is its inverse and &lt;code&gt;conj&lt;/code&gt; calculates the &lt;a href="https://en.wikipedia.org/wiki/Complex_conjugate"&gt;complex conjugate&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The cross-correlation will then have peaks wherever the sample matches.&lt;/p&gt;
+&lt;h2&gt;Identifying Samples&lt;/h2&gt;
+&lt;p&gt;The first thing to do was convert the Best Show mp3 files to wav files to be able to read them into Python:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;lame show.mp3 show.wav --decode
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;The Best Show files all have a sample rate of 24kHz so I had to resample the Bad Company song to match it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;lame badcompany.mp3 badcompany_24k.wav --resample 24000 --decode
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I chopped the 10 seconds of the song where the chorus kicks in:&lt;/p&gt;
+&lt;p&gt;&lt;audio src="audio/chorus.mp3" controls&gt;&lt;/p&gt;
+&lt;p&gt;This is the sample I'll be looking for in each show.&lt;/p&gt;
+&lt;p&gt;I use &lt;code&gt;scipy.io.wavfile&lt;/code&gt; to read in the audio files.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;scipy.io&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;wavfile&lt;/span&gt;
+&lt;span class="n"&gt;rate&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;audio&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;wavfile&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Both the show and the song were in stereo so I converted them to mono to allow the calculations:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+&lt;span class="n"&gt;mono_audio&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;audio&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To make everything go a bit faster I downsample the show and the Bad Company clip by a factor of 8.
+This factor was chosen fairly arbitrarily; it didn't affect the accuracy of the results and it sped things up enough.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;downsample&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;audio&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;factor&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="c"&gt;# Chop off last few samples to ensure number of samples &lt;/span&gt;
+    &lt;span class="c"&gt;# is a multiple of factor&lt;/span&gt;
+    &lt;span class="n"&gt;end&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;audio&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;audio&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="n"&gt;factor&lt;/span&gt;
+    &lt;span class="n"&gt;audio&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;audio&lt;/span&gt;&lt;span class="p"&gt;[:&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;audio&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;reshape&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;factor&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Because the audio inputs are real valued (no complex values) I can also use Numpy's &lt;code&gt;rfft&lt;/code&gt; to speed things up a bit.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+&lt;span class="n"&gt;rfft&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fft&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;rfft&lt;/span&gt;
+&lt;span class="n"&gt;ifft&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;fft&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ifft&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;When calculating the FFT of the Bad Company clip I pass a second parameter, the length of the show clip.
+This pads the clip with zeroes to make it the same length as the show, allowing me to multiply
+the resultant FFTs.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;show_fft&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;rfft&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="c"&gt;# Pad clip to len(show) to allow multiplication&lt;/span&gt;
+&lt;span class="n"&gt;clip_fft&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;rfft&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;clip&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;show&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I then calculate the cross correlation:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cross_correlation&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ifft&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;show_fft&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conj&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;clip_fft&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;To find points in the show where the Bad Company clip is playing, look for peaks in the cross correlation.
+Here's a plot of the cross correlation for the show from the 7th August, 2012:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Peaks" src="http://www.mick.mx/blog/images/bad_company_peaks.png" /&gt;&lt;/p&gt;
+&lt;p&gt;There are four clear peaks here with a smaller peak at the end. 
+The larger peaks are times when the Bad Company clip appears in a show.
+Now all that's left to do is identify the peaks and chop the appropriate clips out of the show.&lt;/p&gt;
+&lt;p&gt;Because the peaks are pretty sharp here (they never span more than a few samples) we can be a bit hand-wavey about identifying them and 
+still get accurate results.
+(To identify peaks in more complicated situations, you should first &lt;a href="http://en.wikipedia.org/wiki/Smoothing"&gt;smooth&lt;/a&gt; the signal and then look at zeros of the first derivative).&lt;/p&gt;
+&lt;p&gt;Firstly, I filter out  'large' values (in this case values above &lt;code&gt;90*mean&lt;/code&gt;, arrived at through trial and error), 
+convert the sample position to a time (using the sample &lt;code&gt;RATE&lt;/code&gt;) 
+and round the value to one decimal place to get rid of multiple values around the same peak.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;get_peaks&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;correlations&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;mean&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;correlations&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c"&gt;# Filter out values above 90*mean&lt;/span&gt;
+    &lt;span class="n"&gt;peaks&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;correlations&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;correlations&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="mi"&gt;90&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;mean&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="n"&gt;peak_positions&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;where&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;correlations&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;peaks&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+    &lt;span class="c"&gt;# Convert sample number to time&lt;/span&gt;
+    &lt;span class="n"&gt;peak_times&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;1.&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;RATE&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;peak_positions&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+    &lt;span class="c"&gt;# Round values to one decimal place and filter out unique values&lt;/span&gt;
+    &lt;span class="n"&gt;filtered_peaks&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;list&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="nb"&gt;round&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;peak_times&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;filtered_peaks&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I went through this process for every show from the 7th August, 2012 onwards and stored the results. I then went back and chopped out
+the audio from 90 second before the peak to 30 seconds after it to give a bit of context. There were 27 Bad Company-ings in total
+and they are all here in this beautiful video:&lt;/p&gt;
+&lt;div class="video"&gt;
+    &lt;iframe width="420" height="315" src="//www.youtube.com/embed/EcJ0EdH8To8" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;</summary></entry></feed>

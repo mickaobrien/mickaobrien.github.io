@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="http://www.mick.mx/blog/theme/css/style.css">
 	<!--<link rel="stylesheet/less" type="text/css" href="/theme/css/style.less">-->
 	<!--<script src="/theme/js/less.js" type="text/javascript"></script>-->
@@ -15,56 +16,151 @@
 </head>
 <body>
 	<section id="sidebar">
-		<figure id="user_logo">
-            <a href="http://www.mick.mx/blog"><div class="logo">&nbsp;</div></a>
-		</figure>
+		<!--<figure id="user_logo">-->
+            <!--<a href="http://www.mick.mx/blog"><div class="logo">&nbsp;</div></a>-->
+		<!--</figure>-->
 
 		<div class="user_meta">
-            <h1 id="user"><a href="http://www.mick.mx/blog" class="">A Parcel of Rogues</a></h1>
+            <h1 id="user"><a href="http://www.mick.mx/blog" class="">Mick O'Brien</a></h1>
 			<h2></h2>
-			<p class="bio">A bit of a laugh...</p>
+			<p class="bio"><a href='https://www.twitter.com/MickMX_'>@MickMX_</a></p>
 			<ul>
-					<li><a href="http://getpelican.com/">Pelican</a></li>
-					<li><a href="http://python.org/">Python.org</a></li>
 			</ul>
 		</div>
-		<footer>
-			<address>
-				Powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
-		                theme by <a href="https://github.com/wting/pelican-svbtle">wting</a>.
-			</address>
-		</footer>
 	</section>
 
 	<section id="posts">
-	<header>
-		<h1>Mick O'Brien's blog</h1>
-		<h3>
-			<script type="text/javascript">
-				var currentDate = new Date();
-				var day = currentDate.getDate();
-				var monthNames = [ "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-				var month = monthNames[currentDate.getMonth()].toUpperCase();
-				var year = currentDate.getFullYear();
-				document.write(month + " " + day + ", " + year);
-			</script>
-		</h3>
-	</header>
 
 	<dl>
 		<ol>
 				<li>
 					<h1 class="title">
-						<a href="http://www.mick.mx/blog/test-post.html" rel="bookmark" title="Permalink to Test Post">Test Post</a>
+						<a href="http://www.mick.mx/blog/ffts-fots.html" rel="bookmark" title="FFTs & FOTs">FFTs & FOTs</a>
 					</h1>
-					<abbr class="published" title="2014-10-04T00:00:00">Sat 04 October 2014</abbr>
-				<div class="entry-content"> <p>Blah</p> </div>
+					<abbr class="published" title="2014-10-13T00:00:00">Mon 13 October 2014</abbr>
+				<div class="entry-content"> <p>Using Fourier Transforms to make a supercut of every Bad Company-ing ever on <a href="http://wfmu.org/playlists/BS">The Best Show on WFMU</a>.</p> </div>
+                <!--<article>-->
+                    <!--<p><a href="http://wfmu.org/playlists/BS">The Best Show on WFMU</a> was amazing! It ended on December 17th, 2013.</p>
+<p>One of my favourite things about the show is how the host, <a href="http://www.twitter.com/scharpling">Tom Scharpling</a> would take an off-the-cuff idea and run with it. Whether that was the introduction of puppets (prog-rock loving Vance and his roommate Gary the squirrel) or deciding <a href="https://www.youtube.com/watch?v=nQVg0c9Rl4k">he can do impressions of anybody</a>.</p>
+<p>In August 2012, while discussing the song <a href="http://en.wikipedia.org/wiki/Bad_Company_(song)">Bad Company</a> (by the band <a href="http://en.wikipedia.org/wiki/Bad_Company">Bad Company</a>, from the album <a href="http://en.wikipedia.org/wiki/Bad_Company_(album)">Bad Company</a>), Tom decided that fading up the chorus would be a good way to dismiss boring callers. Hearing the intro to the song gently fade in as someone rambled on never failed to crack me up.</p>
+<p>To keep me going until the show <a href="https://twitter.com/scharpling/status/520563418420740096">returns</a>(!), I wanted to create a supercut of these Bad Company-ings. I knew there had to be a better way than going through every episode waiting to hear this:</p>
+<p><audio src="audio/chorus.mp3" controls></p>
+<p>So I went looking for a way to automatically identify where the Bad Company-ing occured. It turns out what I was looking for is called the <a href="https://en.wikipedia.org/wiki/Cross-correlation">cross-correlation</a>. 
+It's a <em>"a measure of similarity of two waveforms as a function of a time-lag applied to one of them"</em> and <em>"is commonly used for searching a long signal for a shorter, known feature"</em>. 
+Perfect!</p>
+<p>The cross-correlation of two waveforms is fairly straightforward to calculate. In Python terms:</p>
+<div class="highlight"><pre><span class="n">cross_correlation</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span> <span class="n">fft</span><span class="p">(</span><span class="n">show</span><span class="p">)</span> <span class="o">*</span> <span class="n">conj</span><span class="p">(</span> <span class="n">fft</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+</pre></div>
+
+
+<p>where <code>fft</code> is the <a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">fast Fourier transform</a>, <code>ifft</code> is its inverse and <code>conj</code> calculates the <a href="https://en.wikipedia.org/wiki/Complex_conjugate">complex conjugate</a>.</p>
+<p>The cross-correlation will then have peaks wherever the sample matches.</p>
+<h2>Identifying Samples</h2>
+<p>The first thing to do was convert the Best Show mp3 files to wav files to be able to read them into Python:</p>
+<div class="highlight"><pre>lame show.mp3 show.wav --decode
+</pre></div>
+
+
+<p>The Best Show files all have a sample rate of 24kHz so I had to resample the Bad Company song to match it:</p>
+<div class="highlight"><pre>lame badcompany.mp3 badcompany_24k.wav --resample 24000 --decode
+</pre></div>
+
+
+<p>I chopped the 10 seconds of the song where the chorus kicks in:</p>
+<p><audio src="audio/chorus.mp3" controls></p>
+<p>This is the sample I'll be looking for in each show.</p>
+<p>I use <code>scipy.io.wavfile</code> to read in the audio files.</p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">wavfile</span>
+<span class="n">rate</span><span class="p">,</span> <span class="n">audio</span> <span class="o">=</span> <span class="n">wavfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Both the show and the song were in stereo so I converted them to mono to allow the calculations:</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">mono_audio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+
+<p>To make everything go a bit faster I downsample the show and the Bad Company clip by a factor of 8.
+This factor was chosen fairly arbitrarily; it didn't affect the accuracy of the results and it sped things up enough.</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">downsample</span><span class="p">(</span><span class="n">audio</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+    <span class="c"># Chop off last few samples to ensure number of samples </span>
+    <span class="c"># is a multiple of factor</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">audio</span><span class="p">)</span><span class="o">%</span><span class="n">factor</span>
+    <span class="n">audio</span> <span class="o">=</span> <span class="n">audio</span><span class="p">[:</span><span class="n">end</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">audio</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">factor</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Because the audio inputs are real valued (no complex values) I can also use Numpy's <code>rfft</code> to speed things up a bit.</p>
+<div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">rfft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span>
+<span class="n">ifft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span>
+</pre></div>
+
+
+<p>When calculating the FFT of the Bad Company clip I pass a second parameter, the length of the show clip.
+This pads the clip with zeroes to make it the same length as the show, allowing me to multiply
+the resultant FFTs.</p>
+<div class="highlight"><pre><span class="n">show_fft</span> <span class="o">=</span> <span class="n">rfft</span><span class="p">(</span><span class="n">show</span><span class="p">)</span>
+<span class="c"># Pad clip to len(show) to allow multiplication</span>
+<span class="n">clip_fft</span> <span class="o">=</span> <span class="n">rfft</span><span class="p">(</span><span class="n">clip</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">show</span><span class="p">))</span>
+</pre></div>
+
+
+<p>I then calculate the cross correlation:</p>
+<div class="highlight"><pre><span class="n">cross_correlation</span> <span class="o">=</span> <span class="n">ifft</span><span class="p">(</span><span class="n">show_fft</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">clip_fft</span><span class="p">))</span>
+</pre></div>
+
+
+<p>To find points in the show where the Bad Company clip is playing, look for peaks in the cross correlation.
+Here's a plot of the cross correlation for the show from the 7th August, 2012:</p>
+<p><img alt="Peaks" src="http://www.mick.mx/blog/images/bad_company_peaks.png" /></p>
+<p>There are four clear peaks here with a smaller peak at the end. 
+The larger peaks are times when the Bad Company clip appears in a show.
+Now all that's left to do is identify the peaks and chop the appropriate clips out of the show.</p>
+<p>Because the peaks are pretty sharp here (they never span more than a few samples) we can be a bit hand-wavey about identifying them and 
+still get accurate results.
+(To identify peaks in more complicated situations, you should first <a href="http://en.wikipedia.org/wiki/Smoothing">smooth</a> the signal and then look at zeros of the first derivative).</p>
+<p>Firstly, I filter out  'large' values (in this case values above <code>90*mean</code>, arrived at through trial and error), 
+convert the sample position to a time (using the sample <code>RATE</code>) 
+and round the value to one decimal place to get rid of multiple values around the same peak.</p>
+<div class="highlight"><pre><span class="k">def</span> <span class="nf">get_peaks</span><span class="p">(</span><span class="n">correlations</span><span class="p">):</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">correlations</span><span class="p">)</span>
+
+    <span class="c"># Filter out values above 90*mean</span>
+    <span class="n">peaks</span> <span class="o">=</span> <span class="n">correlations</span><span class="p">[</span><span class="n">correlations</span><span class="o">&gt;</span><span class="mi">90</span><span class="o">*</span><span class="n">mean</span><span class="p">]</span>
+    <span class="n">peak_positions</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">correlations</span><span class="o">==</span><span class="n">p</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">peaks</span><span class="p">]</span>
+
+    <span class="c"># Convert sample number to time</span>
+    <span class="n">peak_times</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.</span><span class="o">*</span><span class="n">p</span><span class="o">/</span><span class="n">RATE</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">peak_positions</span><span class="p">]</span>
+
+    <span class="c"># Round values to one decimal place and filter out unique values</span>
+    <span class="n">filtered_peaks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">peak_times</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">filtered_peaks</span>
+</pre></div>
+
+
+<p>I went through this process for every show from the 7th August, 2012 onwards and stored the results. I then went back and chopped out
+the audio from 90 second before the peak to 30 seconds after it to give a bit of context. There were 27 Bad Company-ings in total
+and they are all here in this beautiful video:</p>
+<div class="video">
+    <iframe width="420" height="315" src="//www.youtube.com/embed/EcJ0EdH8To8" frameborder="0" allowfullscreen></iframe>
+</div>-->
+                <!--</article>-->
 				</li>
 		</ol>
 	</dl>
 
 <p class="paginator">
 </p>
+		<footer>
+			<address>
+				Powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+		                theme based on <a href="https://github.com/wting/pelican-svbtle">wting</a>.
+			</address>
+		</footer>
 	</section>
 
 </body>
