@@ -79,7 +79,7 @@ a:hover {
     /*float: left;*/
     text-align: left;
     word-wrap: break-word;
-    word-break: break-all;
+    /*word-break: break-all;*/
 }
 
 .organization {
