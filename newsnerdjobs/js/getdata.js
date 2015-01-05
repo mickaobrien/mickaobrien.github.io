@@ -1,6 +1,9 @@
 var KEY = '0AmqohgGX3YQadE1VSktrWG1nNFF6RUFNT1RKa0k0a2c';
 
 function urlify(text) {
+    if (typeof text === 'undefined') {
+        return '';
+    }
     //Replace any URL in text with a link
     var urlRegex = /(https?:\/\/[^\s]+)/g;
     return text.replace(urlRegex, function(url) {
