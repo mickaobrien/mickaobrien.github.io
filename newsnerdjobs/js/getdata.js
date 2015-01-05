@@ -1,5 +1,5 @@
-var KEY = '0AmqohgGX3YQadE1VSktrWG1nNFF6RUFNT1RKa0k0a2c',
-    ALL_DATA;
+var KEY = '0AmqohgGX3YQadE1VSktrWG1nNFF6RUFNT1RKa0k0a2c';
+var ALL_DATA;
 
 function urlify(text) {
     //Replace any URL in text with a link
@@ -17,12 +17,12 @@ function init() {
     });
 
     Handlebars.registerHelper('formatDate', function(dateString) {
-        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
-            dateSplit = dateString.split("/"),
-            monthNumber = dateSplit[0]-1,
-            day = dateSplit[1],
-            year = dateSplit[2],
-            cleanDate = monthNames[monthNumber] + " " + day + ", " + year;
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+        var dateSplit = dateString.split("/");
+        var monthNumber = dateSplit[0]-1;
+        var day = dateSplit[1];
+        var year = dateSplit[2];
+        var cleanDate = monthNames[monthNumber] + " " + day + ", " + year;
 
         return new Handlebars.SafeString(cleanDate);
     });
@@ -39,8 +39,8 @@ function init() {
 
 function processData(data, tabletop) {
     ALL_DATA = data;
-    var source = $('#jobs').html(),
-        template = Handlebars.compile(source);
+    var source = $('#jobs').html();
+    var template = Handlebars.compile(source);
     $('#loading').hide();
     $('#jobs-list').append(template({"jobs":ALL_DATA}));
 }
