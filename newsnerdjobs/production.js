@@ -1,53 +1,55 @@
-var KEY = '0AmqohgGX3YQadE1VSktrWG1nNFF6RUFNT1RKa0k0a2c',
-    ALL_DATA;
+var NewsNerdJobs = (function() {
+    var KEY = '0AmqohgGX3YQadE1VSktrWG1nNFF6RUFNT1RKa0k0a2c';
 
-function urlify(text) {
-    //Replace any URL in text with a link
+    function urlify(text) {
+        if (typeof text === 'undefined') {
+            return '';
+        }
+        //Replace any URL in text with a link
         var urlRegex = /(https?:\/\/[^\s]+)/g;
         return text.replace(urlRegex, function(url) {
-                    return '<a href="' + url + '">' + url + '</a>';
+            return '<a href="' + url + '">' + url + '</a>';
         })
-}
+    }
 
 
-function init() {
+    function init() {
 
-    Handlebars.registerHelper('linkify', function(moreinfo) {
-        return new Handlebars.SafeString(urlify(moreinfo));
-    });
+        Handlebars.registerHelper('linkify', function(moreinfo) {
+            return new Handlebars.SafeString(urlify(moreinfo));
+        });
 
-    Handlebars.registerHelper('formatDate', function(dateString) {
-        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ],
-            dateSplit = dateString.split("/"),
-            monthNumber = dateSplit[0]-1,
-            day = dateSplit[1],
-            year = dateSplit[2],
-            cleanDate = monthNames[monthNumber] + " " + day + ", " + year;
+        Handlebars.registerHelper('formatDate', function(dateString) {
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+            var dateSplit = dateString.split("/");
+            var monthNumber = dateSplit[0]-1;
+            var day = dateSplit[1];
+            var year = dateSplit[2];
+            var cleanDate = monthNames[monthNumber] + " " + day + ", " + year;
 
-        return new Handlebars.SafeString(cleanDate);
-    });
+            return new Handlebars.SafeString(cleanDate);
+        });
 
-    Tabletop.init({key: KEY,
-                   callback: processData,
-                   simpleSheet: true, 
-                   wanted: ['Listings'],
-                   orderby: 'dateentered',
-                   reverse: true
+        Tabletop.init({key: KEY,
+                      callback: processData,
+                      simpleSheet: true, 
+                      wanted: ['Listings'],
+                      orderby: 'dateentered',
+                      reverse: true
         } 
-    );
-}
+                     );
+    }
 
-function processData(data, tabletop) {
-    ALL_DATA = data;
-    var source = $('#jobs').html(),
-        template = Handlebars.compile(source);
-    $('#loading').hide();
-    $('#jobs-list').append(template({"jobs":ALL_DATA}));
-}
+    function processData(data, tabletop) {
+        var source = $('#jobs').html();
+        var template = Handlebars.compile(source);
+        $('#loading').hide();
+        $('#jobs-list').append(template({"jobs": data}));
+    }
 
-function IsURL(url) {
+    function IsURL(url) {
 
-    var strRegex = "^((https|http|ftp|rtsp|mms)?://)"
+        var strRegex = "^((https|http|ftp|rtsp|mms)?://)"
         + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" //ftp的user@
         + "(([0-9]{1,3}\.){3}[0-9]{1,3}" // IP形式的URL- 199.194.52.184
         + "|" // 允许IP和DOMAIN（域名）
@@ -57,15 +59,20 @@ function IsURL(url) {
         + "(:[0-9]{1,4})?" // 端口- :80
         + "((/?)|" // a slash isn't required if there is no file name
         + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
-     var re=new RegExp(strRegex);
-     return re.test(url);
- }
+        var re=new RegExp(strRegex);
+        return re.test(url);
+    }
 
-function isUrl(s) {
-    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)? (\/|\/([\w#!:.?+=&%@!\-\/]))?/
-    return regexp.test(s);
-}
+    function isUrl(s) {
+        var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)? (\/|\/([\w#!:.?+=&%@!\-\/]))?/
+        return regexp.test(s);
+    }
 
+    return {
+        'init': init
+    }
+
+})();
 
 /*!
 
@@ -2818,7 +2825,7 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
   "use strict";
 
   var inNodeJS = false;
-  if (typeof process !== 'undefined') {
+  if (typeof module !== 'undefined' && module.exports) {
     inNodeJS = true;
     var request = require('request');
   }
@@ -2837,38 +2844,21 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
     }
   } catch (e) { }
 
-  // from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf
-  if (!Array.prototype.indexOf) {
-    Array.prototype.indexOf = function (searchElement, fromIndex) {
-      if (this == null) {
-        throw new TypeError();
-      }
-      var t = Object(this);
-      var len = t.length >>> 0;
-      if (len === 0) {
-        return -1;
-      }
-      var n = 0;
-      if (arguments.length > 1) {
-        n = Number(arguments[1]);
-        if (n != n) { // shortcut for verifying if it's NaN
-          n = 0;
-        } else if (n != 0 && n != Infinity && n != -Infinity) {
-          n = (n > 0 || -1) * Math.floor(Math.abs(n));
-        }
-      }
-      if (n >= len) {
-        return -1;
-      }
-      var k = n >= 0 ? n : Math.max(len - Math.abs(n), 0);
-      for (; k < len; k++) {
-        if (k in t && t[k] === searchElement) {
-          return k;
-        }
-      }
-      return -1;
-    }
-  }
+  // Create a simple indexOf function for support
+  // of older browsers.  Uses native indexOf if 
+  // available.  Code similar to underscores.
+  // By making a separate function, instead of adding
+  // to the prototype, we will not break bad for loops
+  // in older browsers
+  var indexOfProto = Array.prototype.indexOf;
+  var ttIndexOf = function(array, item) {
+    var i = 0, l = array.length;
+    
+    if (indexOfProto && array.indexOf === indexOfProto) return array.indexOf(item);
+    for (; i < l; i++) if (array[i] === item) return i;
+    return -1;
+  };
+  
   /*
     Initialize with Tabletop.init( { key: '0AjAPaAU9MeLFdHUxTlJiVVRYNGRJQnRmSnQwTlpoUXc' } )
       OR!
@@ -2902,9 +2892,11 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
     this.singleton = !!options.singleton;
     this.simple_url = !!options.simple_url;
     this.callbackContext = options.callbackContext;
+    this.prettyColumnNames = typeof(options.prettyColumnNames) == 'undefined' ? true : options.prettyColumnNames
     
     if(typeof(options.proxy) !== 'undefined') {
-      this.endpoint = options.proxy;
+      // Remove trailing slash, it will break the app
+      this.endpoint = options.proxy.replace(/\/$/,'');
       this.simple_url = true;
       this.singleton = true;
       // Let's only use CORS (straight JSON request) when
@@ -2923,8 +2915,13 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
     
     /* Be friendly about what you accept */
     if(/key=/.test(this.key)) {
-      this.log("You passed a key as a URL! Attempting to parse.");
-      this.key = this.key.match("key=(.*?)&")[1];
+      this.log("You passed an old Google Docs url as the key! Attempting to parse.");
+      this.key = this.key.match("key=(.*?)(&|#|$)")[1];
+    }
+
+    if(/pubhtml/.test(this.key)) {
+      this.log("You passed a new Google Spreadsheets url as the key! Attempting to parse.");
+      this.key = this.key.match("d\\/(.*?)\\/pubhtml")[1];
     }
 
     if(!this.key) {
@@ -3084,7 +3081,7 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
       if(this.wanted.length === 0) {
         return true;
       } else {
-        return this.wanted.indexOf(sheetName) !== -1;
+        return (ttIndexOf(this.wanted, sheetName) !== -1);
       }
     },
     
@@ -3113,7 +3110,7 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
       Add another sheet to the wanted list
     */
     addWanted: function(sheet) {
-      if(this.wanted.indexOf(sheet) === -1) {
+      if(ttIndexOf(this.wanted, sheet) === -1) {
         this.wanted.push(sheet);
       }
     },
@@ -3135,12 +3132,16 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
         this.foundSheetNames.push(data.feed.entry[i].title.$t);
         // Only pull in desired sheets to reduce loading
         if( this.isWanted(data.feed.entry[i].content.$t) ) {
-          var sheet_id = data.feed.entry[i].link[3].href.substr( data.feed.entry[i].link[3].href.length - 3, 3);
-          var json_path = "/feeds/list/" + this.key + "/" + sheet_id + "/public/values?sq=" + this.query + '&alt='
+          var linkIdx = data.feed.entry[i].link.length-1;
+          var sheet_id = data.feed.entry[i].link[linkIdx].href.split('/').pop();
+          var json_path = "/feeds/list/" + this.key + "/" + sheet_id + "/public/values?alt="
           if (inNodeJS || supportsCORS) {
             json_path += 'json';
           } else {
             json_path += 'json-in-script';
+          }
+          if(this.query) {
+            json_path += "&sq=" + this.query;
           }
           if(this.orderby) {
             json_path += "&orderby=column:" + this.orderby.toLowerCase();
@@ -3176,23 +3177,32 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
       }
     },
 
+    sheetReady: function(model) {
+      this.models[ model.name ] = model;
+      if(ttIndexOf(this.model_names, model.name) === -1) {
+        this.model_names.push(model.name);
+      }
+
+      this.sheetsToLoad--;
+      if(this.sheetsToLoad === 0)
+        this.doCallback();
+    },
+    
     /*
       Parse a single list-based worksheet, turning it into a Tabletop Model
 
       Used as a callback for the list-based JSON
     */
     loadSheet: function(data) {
+      var that = this;
       var model = new Tabletop.Model( { data: data, 
-                                    parseNumbers: this.parseNumbers,
-                                    postProcess: this.postProcess,
-                                    tabletop: this } );
-      this.models[ model.name ] = model;
-      if(this.model_names.indexOf(model.name) === -1) {
-        this.model_names.push(model.name);
-      }
-      this.sheetsToLoad--;
-      if(this.sheetsToLoad === 0)
-        this.doCallback();
+                                        parseNumbers: this.parseNumbers,
+                                        postProcess: this.postProcess,
+                                        tabletop: this,
+                                        prettyColumnNames: this.prettyColumnNames,
+                                        onReady: function() {
+                                          that.sheetReady(this);
+                                        } } );
     },
 
     /*
@@ -3226,7 +3236,9 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
     var i, j, ilen, jlen;
     this.column_names = [];
     this.name = options.data.feed.title.$t;
+    this.tabletop = options.tabletop;
     this.elements = [];
+    this.onReady = options.onReady;
     this.raw = options.data; // A copy of the sheet's raw data, for accessing minutiae
 
     if(typeof(options.data.feed.entry) === 'undefined') {
@@ -3240,6 +3252,8 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
         this.column_names.push( key.replace("gsx$","") );
     }
 
+    this.original_columns = this.column_names;
+    
     for(i = 0, ilen =  options.data.feed.entry.length ; i < ilen; i++) {
       var source = options.data.feed.entry[i];
       var element = {};
@@ -3260,7 +3274,11 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
         options.postProcess(element);
       this.elements.push(element);
     }
-
+    
+    if(options.prettyColumnNames)
+      this.fetchPrettyColumns();
+    else
+      this.onReady.call(this);
   };
 
   Tabletop.Model.prototype = {
@@ -3269,6 +3287,74 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
     */
     all: function() {
       return this.elements;
+    },
+    
+    fetchPrettyColumns: function() {
+      if(!this.raw.feed.link[3])
+        return this.ready();
+      var cellurl = this.raw.feed.link[3].href.replace('/feeds/list/', '/feeds/cells/').replace('https://spreadsheets.google.com', '');
+      var that = this;
+      this.tabletop.requestData(cellurl, function(data) {
+        that.loadPrettyColumns(data)
+      });
+    },
+    
+    ready: function() {
+      this.onReady.call(this);
+    },
+    
+    /*
+     * Store column names as an object
+     * with keys of Google-formatted "columnName"
+     * and values of human-readable "Column name"
+     */
+    loadPrettyColumns: function(data) {
+      var pretty_columns = {};
+
+      var column_names = this.column_names;
+
+      var i = 0;
+      var l = column_names.length;
+
+      for (; i < l; i++) {
+        if (typeof data.feed.entry[i].content.$t !== 'undefined') {
+          pretty_columns[column_names[i]] = data.feed.entry[i].content.$t;
+        } else {
+          pretty_columns[column_names[i]] = column_names[i];
+        }
+      }
+
+      this.pretty_columns = pretty_columns;
+
+      this.prettifyElements();
+      this.ready();
+    },
+    
+    /*
+     * Go through each row, substitutiting
+     * Google-formatted "columnName"
+     * with human-readable "Column name"
+     */
+    prettifyElements: function() {
+      var pretty_elements = [],
+          ordered_pretty_names = [],
+          i, j, ilen, jlen;
+
+      var ordered_pretty_names;
+      for(j = 0, jlen = this.column_names.length; j < jlen ; j++) {
+        ordered_pretty_names.push(this.pretty_columns[this.column_names[j]]);
+      }
+
+      for(i = 0, ilen = this.elements.length; i < ilen; i++) {
+        var new_element = {};
+        for(j = 0, jlen = this.column_names.length; j < jlen ; j++) {
+          var new_column_name = this.pretty_columns[this.column_names[j]];
+          new_element[new_column_name] = this.elements[i][this.column_names[j]];
+        }
+        pretty_elements.push(new_element);
+      }
+      this.elements = pretty_elements;
+      this.column_names = ordered_pretty_names;
     },
 
     /*
