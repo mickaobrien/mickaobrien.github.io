@@ -1,5 +1,4 @@
 var KEY = '0AmqohgGX3YQadE1VSktrWG1nNFF6RUFNT1RKa0k0a2c';
-var ALL_DATA;
 
 function urlify(text) {
     //Replace any URL in text with a link
@@ -38,11 +37,10 @@ function init() {
 }
 
 function processData(data, tabletop) {
-    ALL_DATA = data;
     var source = $('#jobs').html();
     var template = Handlebars.compile(source);
     $('#loading').hide();
-    $('#jobs-list').append(template({"jobs":ALL_DATA}));
+    $('#jobs-list').append(template({"jobs": data}));
 }
 
 function IsURL(url) {
