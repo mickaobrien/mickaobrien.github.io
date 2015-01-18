@@ -4,21 +4,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
       * { box-sizing: border-box; }
+      html { font-family: sans-serif; }
       #main {
         width: 90%;
         margin: 0 auto;
       }
 
-      h1 {width:100%; text-align: center;}
       a {text-decoration: none; color: green;} 
       a:hover {color: #666666;}
 
       .project {
         position: relative;
-      }
-
-      .project:hover {
-        
+        margin-bottom: 2vmax;
       }
 
       .project img {
@@ -29,21 +26,49 @@
       }
 
       .title {
-        font-size: 2vmax;
+        font-size: 1.5rem;
         line-height: 200%;
         position: absolute;
         text-align: center;
         width: 99%;
         min-height: 25%;
-        bottom: 0;
+        top: 0;
         left: 0;
-        background:rgba(1,0,0,0.8);
+        background:rgba(1,0,0,0.9);
         color: white;
       }
 
+      .description {
+        font-size: 1.5vmax;
+        padding: 0 0.5vmax;
+        line-height: 200%;
+        position: absolute;
+        width: 99%;
+        bottom: 0;
+        left: 0;
+        background:rgba(1,0,0,0.7);
+        color: white;
+      }
+      .header {
+      }
+
+      .page-title { 
+        font-size: 6vmax; 
+        font-weight: bold;
+        /*text-align: center;*/
+      }
+      h2 { font-size: 4vmax; }
+      .links { 
+        font-size: 3vmax; 
+        line-height: 7vmax; 
+        /*text-align: center;*/
+      }
+
       .list-title {
+        color: rgba(50, 50, 50, 0.8);
         border-bottom: solid 1px green;
         margin: 0;
+        margin-bottom: 1vmax;
       }
 
 
@@ -60,13 +85,24 @@
   </script>
   </head>
   <body>
-    <a href='mailto:mick@mick.mx'><h1>Mick O'Brien</h1></a>
     <div id='main'>
+      <div class='header grid'>
+        <div class='unit half page-title'>
+          <a href='mailto:mick@mick.mx'>Mick O'Brien</a>
+        </div>
+        <div class='links unit half'>
+          (
+          <a href='https://twitter.com/mickmx_'><span class='info-link'>twitter</span></a>
+           / 
+          <a href='https://github.com/mickaobrien'><span class='info-link'>github</span></a>
+          )
+        </div>
+      </div>
       <div class='grid'>
         <h2 class='unit list-title'>Projects</h2>
       </div>
       <div id='projects'>
-        <div  class='grid'>
+        <div class='grid'>
           <div class='project unit half'>
             <a href = 'http://www.mick.mx/blog/ffts-fots.html'>
               <img src='images/ffts_fots.png'>
@@ -78,6 +114,7 @@
             <a href = 'http://www.mick.mx/fringe'>
               <img src='images/fringe.png'>
               <span class='title'>A Day In The Life of the Fringe</span>
+              <!--<span class='description'>A visualisation of </span>-->
             </a>
           </div>
         </div>
@@ -91,20 +128,20 @@
           </div>
 
           <div class='project unit half'>
-            <a href = 'http://www.mick.mx/house_prices'>
-              <img src='images/houseprices.png'>
-              <span class='title'>House Prices vs Earnings in England and Wales</span>
-            </a>
-          </div>
-        </div>
-
-        <div  class='grid'>
-          <div class='project unit half'>
             <a href = 'http://www.dailwatch.ie/radar'>
               <img src='images/radar.png'>
               <span class='title'>Dailwatch Radar</span>
             </a>
           </div>
+          <!--<div class='project unit half'>-->
+            <!--<a href = 'http://www.mick.mx/house_prices'>-->
+              <!--<img src='images/houseprices.png'>-->
+              <!--<span class='title'>House Prices vs Earnings in England and Wales</span>-->
+            <!--</a>-->
+          <!--</div>-->
+        </div>
+
+        <div  class='grid'>
           
           <div class='project unit half'>
             <a href = 'http://www.dailwatch.ie/top-trumps'>
@@ -112,16 +149,16 @@
               <span class='title'>Dailwatch Top Trumps</span>
             </a>
           </div>
-        </div>
-
-        <div  class='grid'>
-
           <div class='project unit half'>
             <a href = 'http://thewitoftheirishtimes.tumblr.com'>
               <img src='images/wit.png'>
               <span class='title'>The Wit of The Irish Times</span>
             </a>
           </div>
+
+        </div>
+
+        <div  class='grid'>
 
           <div class='project unit half'>
             <a href = 'http://www.mick.mx/newsnerdjobs'>
