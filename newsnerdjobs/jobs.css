@@ -1,88 +1,87 @@
 a {
-    text-decoration: none;
-    color: green;
+  text-decoration: none;
+  color: green;
 }
 
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 #container {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #loading {
-    width: 100%;
+  width: 100%;
+  text-align: center;
 }
 
 #loading img {
-    position: relative;
-    left: 40%;
-    top: 20px;
+  margin-top: 1em;
 }
 
 #jobs-list {
-    width: 100%;
-    margin: 0;
+  width: 100%;
+  margin: 0;
 }
 
 #title {
-    text-align: center;
-    padding-bottom: 2px;
-    border-bottom: solid 2px green;
+  text-align: center;
+  padding-bottom: 2px;
+  border-bottom: solid 2px green;
 }
 
 #title h1 {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .job {
-    border: solid 1px gray;
-    margin: 2% 0px;
-    padding: 2%;
-    padding-top: 0;
-    /*width: 100%;*/
-    /*background: #D2EEBC;*/
+  border: solid 1px gray;
+  margin: 2% 0px;
+  padding: 2%;
+  padding-top: 0;
+  /*width: 100%;*/
+  /*background: #D2EEBC;*/
 }
 
 /*table {*/
-    /*width: 100%;*/
-    /*word-wrap: break-word;*/
-    /*word-break: break-all;*/
-    /*table-layout: fixed;*/
+/*width: 100%;*/
+/*word-wrap: break-word;*/
+/*word-break: break-all;*/
+/*table-layout: fixed;*/
 /*}*/
 
 /*th {*/
-    /*font-weight: normal;*/
-    /*padding: 2px 4px;*/
-    /*border: solid 1px gray;*/
-    /*border-top: solid 1px gray;*/
-    /*border-bottom: solid 1px gray;*/
+/*font-weight: normal;*/
+/*padding: 2px 4px;*/
+/*border: solid 1px gray;*/
+/*border-top: solid 1px gray;*/
+/*border-bottom: solid 1px gray;*/
 /*}*/
 
 .detail {
-    display: inline-block;
-    width: 100%;
+  display: inline-block;
+  width: 100%;
 }
 
 .key {
-    width: 10%;
-    /*float: left;*/
-    font-weight: bold;
-    /*text-align: right;*/
+  width: 10%;
+  /*float: left;*/
+  font-weight: bold;
+  /*text-align: right;*/
 }
 
 .value {
-    width: 90%;
-    /*float: left;*/
-    text-align: left;
-    word-wrap: break-word;
-    /*word-break: break-all;*/
+  width: 90%;
+  /*float: left;*/
+  text-align: left;
+  word-wrap: break-word;
+  /*word-break: break-all;*/
 }
 
 .organization {
-    margin-top: -20px;
-    color: #5C5C5C;
+  margin-top: -20px;
+  color: #5C5C5C;
 }
