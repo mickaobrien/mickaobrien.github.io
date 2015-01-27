@@ -2,6 +2,7 @@
     var Fringe = {
 
         init: function() {
+            L.mapbox.accessToken = 'pk.eyJ1IjoiLW1pY2stIiwiYSI6InBoM0pvdXMifQ.cZxAMQ7D-nENcB5SPagqpg';
             this.drawMap();
 
             //Load venue and show data in the background
