@@ -21,9 +21,7 @@ var Share = React.createClass({
     },
     render: function() {
         return (
-            <div className="share">
-                <a href={this.twitterURL()}>Tweet</a>
-            </div>
+            <a href={this.twitterURL()} className="share">Tweet</a>
         );
     }
 });

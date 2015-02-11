@@ -82,6 +82,7 @@ a:hover {
 }
 
 .share {
+  display: block;
   margin: 1em auto;
   padding: 1em 0;
   background-color: hsl(240, 100%, 90%);
