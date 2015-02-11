@@ -84,7 +84,7 @@ a:hover {
 .share {
   margin: 1em auto;
   padding: 1em 0;
-  background-color: yellow;
+  background-color: hsl(240, 100%, 90%);
   text-align: center;
   width: 10%;
   border-radius: 0.25em;
