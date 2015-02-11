@@ -1,0 +1,105 @@
+* {
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+  color: hsl(240, 50%, 50%);
+}
+a:hover {
+  border-bottom: solid 1px;
+}
+
+.heading {
+  font-size: 2.5em;
+  width: 100%;
+  text-align: center;
+  margin-top: 0;
+  padding: 0.5em 0;
+  background-color: hsl(240, 50%, 50%);
+  box-shadow: 0px 2px 2px 1px #aaa;
+  color: white;
+}
+
+#game {
+  /*padding-bottom: 2em;*/
+}
+
+.cards:after {
+  clear: both;
+  content: "";
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+.card {
+  float: left;
+  cursor: pointer;
+  display: inline-block;
+  width: 40%;
+  text-align: center;
+  background: #eee;
+  margin: 0 5%;
+  padding: 2em 0.1em;
+  min-height: 10em;
+  box-shadow: 0px 2px 1px 0px #222;
+}
+.card:hover{
+  outline: solid 1px;
+}
+.card:active{
+  box-shadow: none;
+}
+@media all and (max-width: 600px) {
+  .card {
+    width: 90%;
+    margin: 1em auto;
+    display: block;
+    float: none;
+    min-height: 0;
+  }
+}
+.title {
+  font-size: 1.5em;
+}
+.score {
+  padding: 1em;
+}
+.value {
+  font-weight: bold;
+}
+
+.points {
+  font-size: 1.25em;
+  text-align: center;
+  margin-top: 1em;
+  padding: 1em 0;
+  width: 50%;
+  margin: auto;
+}
+.ratio {
+  padding: 0.25em 0.5em;
+  border-radius: 0.25em;
+}
+
+.share {
+  margin: 1em auto;
+  padding: 1em 0;
+  background-color: yellow;
+  text-align: center;
+  width: 10%;
+  border-radius: 0.25em;
+}
+
+.explainer {
+  position: absolute;
+  bottom: 0;
+  background: rgba(100,100,100,0.3);
+  padding: 0.5em;
+  font-size: 0.9em;
+  width: 100%;
+}
+@media all and (max-width: 600px) {
+  .explainer {
+    position: inherit;
+  }
+}
