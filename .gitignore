@@ -20,3 +20,6 @@ var/
 .install
 
 */cache/
+
+#React
+.module-cache/
