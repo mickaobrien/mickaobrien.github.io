@@ -24,6 +24,12 @@ a:hover {
   /*padding-bottom: 2em;*/
 }
 
+.nothing {
+  font-size: 1.25em;
+  width: 90%;
+  margin: auto;
+}
+
 .cards:after {
   clear: both;
   content: "";

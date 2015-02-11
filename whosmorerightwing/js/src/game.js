@@ -147,7 +147,7 @@ var Game = React.createClass({
                      {cards}
                    </div>;
         } else {
-            game = <div>Refresh to play again</div>
+            game = <div className="nothing">...</div>
         }
         return (
             <div className={this.state.data.length>0 ? 'stuff' : 'no-stuff'}>
