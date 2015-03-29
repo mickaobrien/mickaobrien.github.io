@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="./theme/css/style.css">
+	<!--<link rel="stylesheet/less" type="text/css" href="/theme/css/style.less">-->
+	<!--<script src="/theme/js/less.js" type="text/javascript"></script>-->
+	<link rel="stylesheet" type="text/css" href="./theme/css/pygments.css">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:800,400,300|Inconsolata' rel='stylesheet' type='text/css'>
+
+	<link href="http://www.mick.mx/blog/" type="application/atom+xml" rel="alternate" title=";) ATOM Feed" />
+
+
+		<title>;)</title>
+		<meta charset="utf-8" />
+</head>
+<body>
+	<section id="sidebar">
+		<!--<figure id="user_logo">-->
+            <!--<a href="."><div class="logo">&nbsp;</div></a>-->
+		<!--</figure>-->
+
+		<div class="user_meta">
+            <h1 id="user"><a href="." class="">Mick O'Brien</a></h1>
+			<h2></h2>
+			<p class="bio"><a href='https://www.twitter.com/WhosMick'>@WhosMick</a></p>
+			<ul>
+			</ul>
+		</div>
+	</section>
+
+	<section id="posts">
+	<header>
+		<!--<h1>Mick O'Brien's blog</h1>-->
+		<h3>Posted Mon 30 March 2015</h3>
+	</header>
+	<article>
+		<h1 id="title">
+			<a href="./segregation-in-irish-primary-schools.html" rel="bookmark"
+				title="Permalink to Segregation in Irish Primary Schools">Segregation in Irish Primary Schools</a>
+		</h1>
+        <div class="entry-content summary"> <p>Taking another look at The Irish Times <a href="http://www.irishtimes.com/news/education/census-figures-raise-concerns-of-ethnic-segregation-in-schools-1.2114559">investigation</a> of segregation in Irish primary schools.</p> </div>
+		<p>Last month The Irish Times published <a href="http://www.irishtimes.com/news/education/census-figures-raise-concerns-of-ethnic-segregation-in-schools-1.2114559">an article</a> investigating segregation in Irish primary schools. They showed that a large number of non-Irish students were concentrated in a relatively small number of schools, with just 23% of schools catering for 79% of non-Irish students.
+They also showed that a few schools have very high non-Irish populations.</p>
+<p>These figures are very interesting, but it's not entirely clear how much of this segregation is caused by a geographic disparity of non-Irish populations and how much is actual segregation. For example, there are far more immigrants in the bigger cities than in rural Ireland which could account for some of the disparity.</p>
+<p>I thought it would be interesting to see how this segregation varies between different regions in the country.
+To do this we need to group schools together by region and try and measure the segregation within each region.</p>
+<h4>Grouping Schools Together</h4>
+<p>There is no clear way to group the schools. Ideally we'd use schools in the same district or that share catchment areas but there are no well defined school districts and schools define their own catchment areas. These often coincide with parish boundaries for Catholic schools but there are no hard and fast rules.</p>
+<p>The option I settled on was to use Garda sub-districts. These are the smallest regions defined by the Gardaí, <a href="http://garda.ie/Controller.aspx?Page=21&amp;Lang=1">usually served by a single Garda station or substation</a>. The sub-district boundaries are available from the <a href="http://www.cso.ie/en/census/census2011boundaryfiles/">CSO</a> making it easy to identify which sub-district a particular school belongs to. </p>
+<p>These sub-districts are a pretty good proxy for local area but they aren't perfect. 
+However the rest of this methodology transfers easily, so if there is a better way to group schools together it can be adopted easily.</p>
+<h4>Measuring Segregation</h4>
+<p>Once the schools have been grouped into local areas we need a way to calculate how segregated each area is.
+I used the mutual information index to calculate a segregation score for each area (see the papers linked <a href="#footnotes">below</a> for more details).</p>
+<p>Essentially this index tells us how much information about a person's nationality is conveyed by knowing their school.
+The higher the value of the index, the more segregation there is in the area.
+The code I used to calculate the index is available <a href="https://www.github.com/mickaobrien/school-segregation">here</a>.</p>
+<h4>Results</h4>
+<p>It turns out that most regions have very low segregation scores. There are 33 regions that score 0, either because there is only one school in the region or because there are no non-Irish students registered in the region. In either case segregation is not possible.</p>
+<p>70% of regions (containing 42% of all students) have a score of less than 0.05. To put this in context, let's take a look at the Wexford region which has a segregation score of 0.05. There are 2,552 students in the region of which 12% are registered as non-Irish. The distribution of students looks as follows
+<span class="explanation"> (the dashed line is the region-level percentage of non-Irish students)</span>:
+<!--TODO FIX TABLE WITH LATEST LAYOUT-->
+<h4 class="table-title">Wexford</h4>
+<table>
+<thead><tr><th>School Name</th><th>Students</th><th>% Non-Irish</th></tr></thead>
+<tbody>
+<tr><td>Convent Of Mercy</td><td data-title="Students">471</td><td data-title="% Non-Irish">12%</td><td class="bar-cell"><span class="bar" style="width: 12.101910828025478%;"></span><span class="line" style="left: -0.307239981630493%;"></span></td></tr>
+<tr><td>Faythe Convent</td><td data-title="Students">248</td><td data-title="% Non-Irish">27%</td><td class="bar-cell"><span class="bar" style="width: 26.61290322580645%;"></span><span class="line" style="left: -14.818232379411466%;"></span></td></tr>
+<tr><td>Gaelscoil Loch Garman</td><td data-title="Students">223</td><td data-title="% Non-Irish">0%</td><td class="bar-cell"><span class="bar" style="width: 0%;"></span><span class="line" style="left: 11.794670846394984%;"></span></td></tr>
+<tr><td>Scoil Mhuire Coolcotts</td><td data-title="Students">563</td><td data-title="% Non-Irish">7%</td><td class="bar-cell"><span class="bar" style="width: 7.460035523978685%;"></span><span class="line" style="left: 4.3346353224162995%;"></span></td></tr>
+<tr><td>Scoil Na Mbraithre</td><td data-title="Students">236</td><td data-title="% Non-Irish">18%</td><td class="bar-cell"><span class="bar" style="width: 17.796610169491526%;"></span><span class="line" style="left: -6.001939323096541%;"></span></td></tr>
+<tr><td>Scoil Náisiúnta Bhaile Mhuirne</td><td data-title="Students">244</td><td data-title="% Non-Irish">1%</td><td class="bar-cell"><span class="bar" style="width: 1.2295081967213115%;"></span><span class="line" style="left: 10.565162649673674%;"></span></td></tr>
+<tr><td>Scoil Náisiúnta Clochar Mhuire</td><td data-title="Students">367</td><td data-title="% Non-Irish">16%</td><td class="bar-cell"><span class="bar" style="width: 16.076294277929154%;"></span><span class="line" style="left: -4.281623431534169%;"></span></td></tr>
+<tr><td>St Iberius National School</td><td data-title="Students">98</td><td data-title="% Non-Irish">7%</td><td class="bar-cell"><span class="bar" style="width: 7.142857142857142%;"></span><span class="line" style="left: 4.651813703537842%;"></span></td></tr>
+<tr><td>Wexford Educate Together National School</td><td data-title="Students">102</td><td data-title="% Non-Irish">25%</td><td class="bar-cell"><span class="bar" style="width: 24.509803921568626%;"></span><span class="line" style="left: -12.71513307517364%;"></span></td></tr>
+</tbody></table></p>
+<p>As you can see there is a relatively even distribution of the region's non-Irish students among its 9 schools.</p>
+<h4>High Scores</h4>
+<p>At the other end of the scale, here are the regions with the top 10 scores:
+<table>
+<thead><tr><th>Region</th><th>Score</th></thead>
+<tr><td>1. Balbriggan, Dublin</td><td data-title="Score">0.39</td></tr>
+<tr><td>2. Rathcoole, Dublin</td><td data-title="Score">0.31</td></tr>
+<tr><td>3. Gort, Galway</td><td data-title="Score">0.28</td></tr>
+<tr><td>4. Lucan, Dublin</td><td data-title="Score">0.27</td></tr>
+<tr><td>5. Fermoy, Cork</td><td data-title="Score">0.27</td></tr>
+<tr><td>6. Monaghan</td><td data-title="Score">0.23</td></tr>
+<tr><td>7. Ballyconnell, Cavan</td><td data-title="Score">0.23</td></tr>
+<tr><td>8. Ballyhaunis, Mayo</td><td data-title="Score">0.22</td></tr>
+<tr><td>9. Longford</td><td data-title="Score">0.21</td></tr>
+<tr><td>10. Mountjoy, Dublin</td><td data-title="Score">0.21</td></tr>
+</table></p>
+<p>Rathcoole is the second highest scoring region in the country. There are 1,746 students in the region, of which 431 (25%) are registered as non-Irish.
+Here's what the distribution of students looks like:</p>
+<h4 class="table-title">Rathcoole</h4>
+
+<table><thead><tr><th>School Name</th><th>Students</th><th>% Non-Irish</th></tr></thead><tbody><tr><td>Scoil Náisiúnta Naomh Mhuire</td><td data-title="Students">482</td><td data-title="% Non-Irish">71%</td><td class="bar-cell"><span class="bar" style="width: 70.53941908713693%;"></span><span class="line" style="left: -45.85442481451379%;"></span></td></tr><tr><td>Holy Family National School</td><td data-title="Students">601</td><td data-title="% Non-Irish">11%</td><td class="bar-cell"><span class="bar" style="width: 11.480865224625623%;"></span><span class="line" style="left: 13.204129047997515%;"></span></td></tr><tr><td>Scoil Chronain</td><td data-title="Students">268</td><td data-title="% Non-Irish">5%</td><td class="bar-cell"><span class="bar" style="width: 5.223880597014925%;"></span><span class="line" style="left: 19.461113675608217%;"></span></td></tr><tr><td>Caisleain Nua Liamhna</td><td data-title="Students">395</td><td data-title="% Non-Irish">2%</td><td class="bar-cell"><span class="bar" style="width: 2.0253164556962027%;"></span><span class="line" style="left: 22.659677816926937%;"></span></td></tr></tbody></table>
+
+<p>As you can see, there is a disproportionate amount of non-Irish students in Scoil Náisiúnta Naomh Mhuire.</p>
+<p><link rel="stylesheet" type="text/css" media="screen" href="css/segregation.css" />
+<div id="search-box" class="embed">
+  <h2>See How Your Area Compares</h2>
+  <p>Search for your local school to see how your region compares to the rest of the country.</p>
+  <input class="typeahead" type="text" placeholder="Search for your local school">
+  <div id="results">
+  </div>
+</div></p>
+<h4>Notes</h4>
+<p>The data on children's nationality is taken from The Irish Times <a href="http://www.irishtimes.com/news/education/census-figures-raise-concerns-of-ethnic-segregation-in-schools-1.2114559">article</a>. They note that the Department of Education <em>"asks for the nationality that the parents/guardians indicate the pupils are"</em> and <em>"the best estimate of nationality where the relevant data is not available"</em>.</p>
+<p>According to The Irish Times: <em>"This means that, this information is not recorded uniformly: while some principals may record a child’s nationality as being the same as that of their parents, other schools may categorise any child born here as Irish regardless of their background or first language."</em></p>
+<h4>Sources</h4>
+<div id="footnotes">
+    <p>
+    [1] <a href="https://feb.kuleuven.be/drc/CES/research/dps-papers/dps10/dps1025.pdf">More than "Mutual Information": Educational and Sectoral Gender Segregation and theirInteraction on the Flemish Labour Market</a> (PDF)
+    </p>
+
+    <p>
+    [2] <a href="http://www2.econ.iastate.edu/faculty/frankel/segindex.pdf">Measuring School Segregation</a> (PDF)
+    </p>
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="js/typeahead.js"></script>
+
+<script type="text/javascript" src="js/segregation.js"></script>
+
+		<div id="article_meta">
+		</div>
+	</article>
+
+	<footer>
+		<a href="./" class="button_accent">&larr;&nbsp;&nbsp;&nbsp;Back to blog</a>
+	</footer>
+
+
+		<footer>
+			<address>
+				Powered by <a href="http://pelican.notmyidea.org/">Pelican</a>,
+		                theme based on <a href="https://github.com/wting/pelican-svbtle">wting</a>.
+			</address>
+		</footer>
+	</section>
+
+<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+		try {
+			var pageTracker = _gat._getTracker("UA-51906911-1");
+			pageTracker._trackPageview();
+		} catch(err) {}</script>
+</body>
+</html>
