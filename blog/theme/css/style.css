@@ -293,7 +293,7 @@ section#posts p.paginator {
 }
 section#posts article {
   margin: 0;
-  padding: 40px 40px 40px 50px;
+  padding: 2em 1em;
   position: relative;
   font-size: 2em;
   line-height: 1.25em;
