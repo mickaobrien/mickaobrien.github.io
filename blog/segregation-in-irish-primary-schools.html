@@ -55,7 +55,7 @@ However the rest of this methodology transfers easily, so if there is a better w
 I used the mutual information index to calculate a segregation score for each area (see the papers linked <a href="#footnotes">below</a> for more details).</p>
 <p>Essentially this index tells us how much information about a person's nationality is conveyed by knowing their school.
 The higher the value of the index, the more segregation there is in the area.
-The code I used to calculate the index is available <a href="https://www.github.com/mickaobrien/school-segregation">here</a>.</p>
+The code I used to calculate the index is available <a href="https://github.com/mickaobrien/School-Segregation/blob/master/calculate_segregation.py#L50">here</a>.</p>
 <h4>Results</h4>
 <p>It turns out that most regions have very low segregation scores. There are 33 regions that score 0, either because there is only one school in the region or because there are no non-Irish students registered in the region. In either case segregation is not possible.</p>
 <p>70% of regions (containing 42% of all students) have a score of less than 0.05. To put this in context, let's take a look at the Wexford region which has a segregation score of 0.05. There are 2,552 students in the region of which 12% are registered as non-Irish. The distribution of students looks as follows
@@ -122,7 +122,9 @@ Here's what the distribution of students looks like:</p>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-<script type="text/javascript" src="js/typeahead.js"></script>
+<!--<script type="text/javascript" src="js/typeahead.js"></script>-->
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.bundle.min.js"></script>
 
 <script type="text/javascript" src="js/segregation.js"></script>
 
