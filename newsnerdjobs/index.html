@@ -22,24 +22,24 @@
         <script id="jobs" type="text/x-handlebars-template">
             {{#each jobs}}
                 <div class="job">
-                    <h2>{{jobtitle}}</h2>
-                    <h3 class="organization">{{organization}}</h3>
+                    <h2>{{[Job Title]}}</h2>
+                    <h3 class="organization">{{Organization}}</h3>
                         <div class="detail">
                             <span class="key">Posted on:</span>
-                            <span class="value">{{{formatDate dateentered}}}</span>
+                            <span class="value">{{{formatDate [Date Entered]}}}</span>
                         </div>
                         <div class="detail">
                             <span class="key">Location:</span>
-                            <span class="value">{{citystate}}, {{country}}</span>
+                            <span class="value">{{[City/State]}}, {{Country}}</span>
                         </div>
                         <div class="detail">
                             <span class="key">More info:</span>
-                            <span class="value">{{{linkify descriptionandurltojobpostingifavailable}}}</span>
+                            <span class="value">{{{linkify [Description and URL to job posting (if available)]}}}</span>
                         </div>
                         <div class="detail">
                             <span class="key">Contact:</span>
-                            <span class="value">{{contactperson}} 
-                               (<a href='mailto:{{contactemail}}'>{{contactemail}}</a>)</span>
+                            <span class="value">{{[Contact Person]}} 
+                               (<a href='mailto:{{contactemail}}'>{{[Contact Email]}}</a>)</span>
                         </div>
                 </div>
             {{/each}}

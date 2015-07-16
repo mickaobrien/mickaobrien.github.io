@@ -25,6 +25,13 @@ var NewsNerdJobs = (function() {
             var monthNumber = dateSplit[0]-1;
             var day = dateSplit[1];
             var year = dateSplit[2];
+
+            // If using correct date formatting
+            if (monthNumber>11) {
+                day = monthNumber;
+                monthNumber = dateSplit[1]-1;
+            }
+
             var cleanDate = monthNames[monthNumber] + " " + day + ", " + year;
 
             return new Handlebars.SafeString(cleanDate);
