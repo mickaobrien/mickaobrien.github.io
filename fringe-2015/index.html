@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A Day In The Life Of The Edinburgh Fringe</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/base-min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+  </head>
+  <body>
+    <!--[if lt IE 8]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div id="intro">
+      <div id="headline">
+        <strong>A Day In The Life Of The 2015 <a href="http://www.edfringe.com">Edinburgh Fringe</a></strong>
+      </div>
+      <div id="intro-text">
+        <p>
+        The Edinburgh Fringe takes place from the 7th to the 31st August this year. It's the world's biggest arts festival with thousands of performances each day - from comedy to cabaret to dance and physical theatre.
+        </p>
+        <p>
+        The sheer scale of the festival is mind boggling! To get a sense of it, click below and see what one random day during the Fringe is like.
+        </p>
+        <button disabled="disabled">Loading...</button>
+      </div>
+      <div id="attributions">
+        <span style="">Built by <a href="http://www.twitter.com/WhosMick">@WhosMick</a></span>
+        <span style="">Data from <a href="http://www.edfringe.com">edfringe.com</a></span>
+      </div>
+    </div>
+    <div id="legend" class="animation">
+      <h2>Legend</h2>
+      <ul>
+        <li>
+          <svg height="20" width="20" viewBox="0 0 24 24">
+            <circle class="cabaret legend-dot" r="6" cx="10" cy="17"/>
+          </svg>
+          Cabaret
+        </li>
+        <li>
+          <svg height="20" width="20" viewBox="0 0 24 24">
+            <circle class="childrensshows legend-dot" r="6" cx="10" cy="17"/>
+          </svg>
+          Children
+        </li>
+        <li>
+          <svg height="20" width="20" viewBox="0 0 24 24">
+            <circle class="comedy legend-dot" r="6" cx="10" cy="17"/>
+          </svg>
+          Comedy
+        </li>
+        <li>
+          <svg height="20" width="20" viewBox="0 0 24 24">
+            <circle class="events legend-dot" r="6" cx="10" cy="17"/>
+          </svg>
+          Events
+        </li>
+        <li>
+          <svg height="20" width="20" viewBox="0 0 24 24">
+            <circle class="exhibitions legend-dot" r="6" cx="10" cy="17"/>
+          </svg>
+          Exhibitions
+        </li>
+        <li>
+          <svg height="20" width="20" viewBox="0 0 24 24">
+            <circle class="music legend-dot" r="6" cx="10" cy="17"/>
+          </svg>
+          Music
+        </li>
+        <li>
+          <svg height="20" width="20" viewBox="0 0 24 24">
+            <circle class="musicalsandopera legend-dot" r="6" cx="10" cy="17"/>
+          </svg>
+          Musicals
+        </li>
+        <li>
+          <svg height="20" width="20" viewBox="0 0 24 24">
+            <circle class="dancephysicaltheatreandcircus legend-dot" r="6" cx="10" cy="17"/>
+          </svg>
+          Physical Theatre
+        </li>
+        <li>
+          <svg height="20" width="20" viewBox="0 0 24 24">
+            <circle class="spokenword legend-dot" r="6" cx="10" cy="17"/>
+          </svg>
+          Spoken Word
+        </li>
+        <li>
+          <svg height="20" width="20" viewBox="0 0 24 24">
+            <circle class="theatre legend-dot" r="6" cx="10" cy="17"/>
+          </svg>
+          Theatre
+        </li>
+      </ul>
+    </div>
+    <div id="time-info" class="animation">
+      <div id="day-info" class="sidebox">
+        <div id="date" class="info"></div> 
+        This is <span id="busy" class="info"></span> at the Fringe with <span id="total-count" class="info"></span> performances (the average is 2019).
+      </div>
+      <div id="live-info" class="sidebox">
+        <div id="time">
+          <img id="clock" src="images/clock.png"/>
+          <span id="current-time" class="updating"></span>
+        </div>
+        <div id="show-count">Shows on now: <span id="active-count" class="updating">0</span></div>
+      </div>
+      <div id="show-info" class="sidebox">Every dot is a show, click on one to get more info</div>
+    </div>
+    <div id="map"></div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://d3js.org/queue.v1.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.1.min.js"><\/script>')</script>
+    <script src="js/map.js"></script>
+
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-51906911-1', 'auto');
+    ga('send', 'pageview');
+
+    </script>
+  </body>
+</html>

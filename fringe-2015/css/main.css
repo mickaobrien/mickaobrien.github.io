@@ -1,0 +1,264 @@
+body {
+  /*background-color: #cac7ce;*/
+  line-height: 1.4;
+}
+
+#header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: rgb(254, 54, 96);
+  text-align: center;
+  color: white;
+  z-index: 5;
+}
+
+.animation {
+  display: none;
+}
+
+#intro a {
+  text-decoration: none;
+  color: rgb(234,54,96);
+}
+
+#intro a:hover {
+  border-bottom: solid 2px rgb(234,54,96);
+}
+
+#intro {
+  position: absolute;
+  left: 12.5%;
+  top: 12.5%;
+  /*height: 50%;*/
+  width: 75%;
+  background: rgba(238,54,96,0.9);
+  z-index: 1001;
+  border: 1px solid rgb(238,54,96)
+}
+
+#headline {
+  padding: 18px 0;
+  text-align: center;
+  width: 100%;
+  background: white;
+  font-size: 1.7em;
+}
+
+#intro-text {
+  padding: 12px 24px;
+  color: white;
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+  border: none;
+  padding: 4px 8px;
+  background-color: #23ca7a;
+}
+
+button:hover {
+  background-color: black;
+  color: white;
+}
+
+#attributions {
+  text-align: center;
+  font-size: 0.8em;
+  background-color: white;
+  color: black;
+  margin-top: 1%;
+  padding: 2px 0;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  cursor: default;
+}
+
+.info {
+  font-weight: bold;
+}
+
+.sidebox {
+  box-sizing: border-box;
+  padding: 4px 8px;
+  background-color: rgba(255,255,255,0.7);
+}
+
+#day-info {
+  /*background: rgba(255, 255, 255, 0.7);*/
+  /*padding: 4px 8px;*/
+  /*margin-bottom: 1em;*/
+}
+
+#date {
+  text-align: center;
+  background-color: rgb(238,54,96);
+  color: white;
+  font-size: 1.5em;
+  margin-bottom: 0.25em;
+}
+
+#month-date {
+  white-space: nowrap;
+}
+
+#time, #show-count {
+/*#time {*/
+  display: table;
+  margin: 0 auto;
+}
+
+#live-info {
+}
+
+#clock {
+  width: 70%;
+}
+
+#current-time {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 1.7em;
+}
+
+.updating {
+  font-size: 1.2em;
+  color: rgb(238,54,96);
+}
+
+#time-info {
+  position: absolute;
+  /*height: 20px;*/
+  z-index: 5;
+}
+
+#legend {
+  line-height: 0;
+  position: absolute;
+  z-index: 5;
+  background-color: rgba(0,0,0,0.6);
+}
+
+#legend ul li{
+  padding: 2px 4px;
+  /*display: inline-block;*/
+}
+@media all and (min-width: 650px) {
+  #legend {
+    right: 0;
+    top: 0;
+    margin: 10px; 
+    padding: 0 4px;
+  }
+
+  #time-info {
+    top: 10px;
+    left: 10px;
+    width: 25%;
+  }
+
+  .sidebox {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+}
+
+@media all and (max-width: 649px) {
+  #intro {
+    top: 5%;
+    left: 5%;
+    width: 90%;
+  }
+
+  #legend {
+    bottom: 40px;
+    width: 100%;
+    padding: 0 4px;
+    background-color: rgba(0,0,0,0.6);
+  }
+
+  #legend h2 {
+    display: none;
+  }
+
+  #legend ul {
+    margin-top: 0;
+  }
+
+  #time-info {
+    top: 0;
+    left: 0;
+  }
+  #legend ul li{
+    display: inline-block;
+  }
+
+  .sidebox {
+    width: 48%;
+    float: left;
+    margin: 1%;
+    /*margin-right: 2%;*/
+    /*margin-right: 2%;*/
+    /*margin-bottom: 2%;*/
+  }
+}
+
+#legend h2 {
+  text-align: center;
+  color: white;
+  margin-bottom: 0;
+}
+
+#legend ul {
+  list-style: none;
+  padding: 0;
+  color: #ddd;
+}
+
+
+.legend-dot {
+  cursor: default;
+}
+
+.exhibitions { 
+  fill: #4AF732; 
+}
+.events { 
+  fill: #000; 
+}
+.spokenword { 
+  fill: #FF0090; 
+}
+.dancephysicaltheatreandcircus { 
+  fill: #8581D9; 
+}
+.musicalsandopera { 
+  fill: #18A7B5; 
+}
+.theatre { 
+  fill: #ED1C24; 
+}
+.comedy { 
+  fill: #4B0082; 
+}
+.childrensshows { 
+  fill: #00A550; 
+}
+.cabaret { 
+  fill: #FC0FC0; 
+}
+.music { 
+  fill: #FF4500; 
+}
+
+circle {
+  opacity: 0.8;
+  cursor: pointer;
+}
