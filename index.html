@@ -3,6 +3,54 @@
     <link rel="stylesheet" href="base.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type="text/css">
+      /* http://meyerweb.com/eric/tools/css/reset/ 
+         v2.0 | 20110126
+         License: none (public domain)
+      */
+      html, body, div, span, applet, object, iframe,
+      h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+      a, abbr, acronym, address, big, cite, code,
+      del, dfn, em, img, ins, kbd, q, s, samp,
+      small, strike, strong, sub, sup, tt, var,
+      b, u, i, center,
+      dl, dt, dd, ol, ul, li,
+      fieldset, form, label, legend,
+      table, caption, tbody, tfoot, thead, tr, th, td,
+      article, aside, canvas, details, embed, 
+      figure, figcaption, footer, header, hgroup, 
+      menu, nav, output, ruby, section, summary,
+      time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+      }
+      /* HTML5 display-role reset for older browsers */
+      article, aside, details, figcaption, figure, 
+      footer, header, hgroup, menu, nav, section {
+        display: block;
+      }
+      body {
+        line-height: 1;
+      }
+      ol, ul {
+        list-style: none;
+      }
+      blockquote, q {
+        quotes: none;
+      }
+      blockquote:before, blockquote:after,
+      q:before, q:after {
+        content: '';
+        content: none;
+      }
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+
       * { box-sizing: border-box; }
       html { font-family: sans-serif; }
       #main {
@@ -10,20 +58,12 @@
         margin: 0 auto;
       }
 
-      a {text-decoration: none; color: green;} 
+      p { margin: 0.4em 0; }
+      a {text-decoration: none; color: hsl(36, 78%, 54%);} 
       a:hover {color: #666666;}
 
-      .project {
-        position: relative;
-        margin-bottom: 2vmax;
-      }
-
-      .project img {
-        max-width: 100%;
-        height: auto;
-        border: 0;
-        vertical-align: middle;
-      }
+      .project { margin-bottom: 2vmax; }
+      .project-title { font-weight: bold; border-bottom: solid 2px; }
 
       .title {
         font-size: 1.5rem;
@@ -50,14 +90,14 @@
         color: white;
       }
       .header {
+        background-color: hsl(36, 10%, 96%);
+        padding: 0 5%;
       }
 
       .page-title { 
         font-size: 6vmax; 
-        font-weight: bold;
-        /*text-align: center;*/
       }
-      h2 { font-size: 4vmax; }
+      h2 { font-size: 2em; }
       .links { 
         font-size: 3vmax; 
         line-height: 7vmax; 
@@ -66,9 +106,10 @@
 
       .list-title {
         color: #666666;
-        border-bottom: solid 1px green;
+        border-bottom: solid 1px hsl(36, 78%, 54%);
         margin: 0;
         margin-bottom: 1vmax;
+        padding: 1vmax 0;
       }
 
 
@@ -85,89 +126,95 @@
   </script>
   </head>
   <body>
-    <div id='main'>
-      <div class='header grid'>
-        <div class='unit half page-title'>
-          <a href='mailto:mick@mick.mx'>Mick O'Brien</a>
-        </div>
-        <div class='links unit half'>
-          (
-          <a href='https://twitter.com/WhosMick'><span class='info-link'>twitter</span></a>
-           / 
-          <a href='https://github.com/mickaobrien'><span class='info-link'>github</span></a>
-          )
-        </div>
+    <div class="header grid no-gutters">
+      <div class="unit half page-title">
+        <a href="mailto:mick@mick.mx">Mick O'Brien</a>
       </div>
-      <div class='grid'>
-        <h2 class='unit list-title'>Projects</h2>
-      </div>
-      <div id='projects'>
-        <div class='grid'>
-          <div class='project unit half'>
-            <a href = 'http://www.mick.mx/blog/ffts-fots.html'>
-              <img src='images/ffts_fots.png'>
-              <span class='title'>FFTs & FOTs</span>
-            </a>
-          </div>
-
-          <div class='project unit half'>
-            <a href = 'http://www.mick.mx/fringe'>
-              <img src='images/fringe.png'>
-              <span class='title'>A Day In The Life of the Fringe</span>
-              <!--<span class='description'>A visualisation of </span>-->
-            </a>
-          </div>
-        </div>
-
-        <div  class='grid'>
-          <div class='project unit half'>
-            <a href = 'http://www.mick.mx/scottish_meps'>
-              <img src='images/meps.png'>
-              <span class='title'>MEP Election Results Scotland</span>
-            </a>
-          </div>
-
-          <div class='project unit half'>
-            <a href = 'http://www.dailwatch.ie/radar'>
-              <img src='images/radar.png'>
-              <span class='title'>Dailwatch Radar</span>
-            </a>
-          </div>
-          <!--<div class='project unit half'>-->
-            <!--<a href = 'http://www.mick.mx/house_prices'>-->
-              <!--<img src='images/houseprices.png'>-->
-              <!--<span class='title'>House Prices vs Earnings in England and Wales</span>-->
-            <!--</a>-->
-          <!--</div>-->
-        </div>
-
-        <div  class='grid'>
-          
-          <div class='project unit half'>
-            <a href = 'http://www.dailwatch.ie/top-trumps'>
-              <img src='images/toptrumps.png'>
-              <span class='title'>Dailwatch Top Trumps</span>
-            </a>
-          </div>
-          <div class='project unit half'>
-            <a href = 'http://thewitoftheirishtimes.tumblr.com'>
-              <img src='images/wit.png'>
-              <span class='title'>The Wit of The Irish Times</span>
-            </a>
-          </div>
-
-        </div>
-
-        <div  class='grid'>
-
-          <div class='project unit half'>
-            <a href = 'http://www.mick.mx/newsnerdjobs'>
-              <img src='images/newsnerdjobs.png'>
-              <span class='title'>News Nerd Jobs</span>
-            </a>
-          </div>
-        </div>
+      <div class="links unit half">
+        (
+        <a href="https://twitter.com/WhosMick"><span class="info-link">twitter</span></a>
+         / 
+        <a href="https://github.com/mickaobrien"><span class="info-link">github</span></a>
+        )
       </div>
     </div>
+    <div id="main">
+      <h2 class="unit list-title">Projects</h2>
+      <div id="projects">
+        <ul>
+          <li class="project">
+            <a class="project-title" href = 'http://www.mick.mx/blog/ffts-fots.html'>
+            FFTs & FOTs
+            </a>
+            <p>
+            Using Fast Fourier Transforms to identify when Tom Scharpling <a href="https://www.youtube.com/watch?v=EcJ0EdH8To8">Bad Company-ed people on The Best Show</a>.
+            </p>
+          </li>
+          <li>
+            <a href = 'http://www.mick.mx/blog/ffts-fots.html'>
+            FFTs & FOTs
+            </a>
+            <p>
+            Finding audio
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <script src="js/mustache.min.js"></script>
+    <script id="template" type="x-tmpl-mustache">
+      <ul>
+      {{#projects}}
+      <li class="project">
+        <a class="project-title" href="{{url}}">{{title}}</a>
+        <p>
+        {{{description}}}
+        </p>
+      </li>
+      {{/projects}}
+      </ul>
+    </script>
+
+    <script>
+      var projects = [
+              {title: 'Memory of Place',
+               url: 'http://festivalofcuriosity.ie/index.php/memory-of-place-interactive-audio-map-of-dublin-memories/',
+                    description: 'An app to explore memory and place in Dublin city centre. Interviews about personal memories and the science of memory are triggered by the user\'s location. Available for <a href="https://itunes.apple.com/ie/app/memory-of-place/id1017025207?mt=8&ign-mpt=uo">iOS</a> and <a href="https://play.google.com/store/apps/details?id=com.festivalofcuriosity.memoryplace">Android</a>.'},
+              {title: 'Segregation in Irish Primary Schools',
+               url: 'http://www.mick.mx/blog/segregation-in-irish-primary-schools.html',
+                    description: 'Another look at the primary school segregation data from <a href="http://www.irishtimes.com/news/education/census-figures-raise-concerns-of-ethnic-segregation-in-schools-1.2114559">The Irish Times</a>.'},
+              {title: 'FFTs & FOTs',
+               url: 'http://www.mick.mx/blog/ffts-fots.html',
+               description: 'Using Fast Fourier Transforms to identify when Tom Scharpling <a href="https://www.youtube.com/watch?v=EcJ0EdH8To8">Bad Company-ed people on The Best Show</a>.'},
+              {title: 'A Day In The Life of the Fringe',
+               url: 'http://www.mick.mx/fringe-2015',
+               description: 'A visualisation of the world\'s biggest arts festival, the Edinburgh fringe. 2014 version <a href="http://www.mick.mx/fringe">here</a>.'},
+              {title: 'MEP Election Results Scotland',
+               url: 'http://www.mick.mx/scottish_meps',
+               description: 'A visualisation of the spread of party support in the 2014 European elections in Scotland.'},
+              {title: 'Dailwatch Radar',
+               url: 'http://www.dailwatch.ie/radar',
+               description: 'A tool to visualise the results of votes in the D&aacute;il (Irish parliament).'},
+              {title: 'Dailwatch Trumps',
+               url: 'http://www.dailwatch.ie/top-trumps',
+               description: 'A top trumps style card game to learn about politicians\' records.'},
+              {title: 'The Wit of The Irish Times',
+               url: 'http://thewitoftheirishtimes.tumblr.com',
+               description: 'A scraper that publishes the shortest letter in The Irish Times everyday. Because the short letters are the funny ones!'},
+              {title: 'News Nerd Jobs',
+               url: 'http://www.mick.mx/newsnerdjobs',
+                    description: 'A slightly easier to read version of the news nerd job listings found <a href="https://docs.google.com/spreadsheet/ccc?key=0AmqohgGX3YQadE1VSktrWG1nNFF6RUFNT1RKa0k0a2c&authkey=CK7OlpsI&hl=en_US#gid=0">here</a>.'},
+
+
+                  ];
+
+      // Render project list
+      (function () {
+        var template = document.getElementById('template').innerHTML;
+        Mustache.parse(template);
+        var rendered = Mustache.render(template, { projects: projects });
+        document.getElementById('projects').innerHTML = rendered;
+      })();
+    </script>
   </body>
 </html>
