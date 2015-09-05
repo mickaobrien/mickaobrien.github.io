@@ -263,14 +263,23 @@
         Mousetrap.bind('j', function() {
             deactivateAll();
             incrementProject();
-            markActive(currentProject);
+            activateProject();
         });
        
         Mousetrap.bind('k', function() {
             deactivateAll();
             decrementProject();
-            markActive(currentProject);
+            activateProject();
         });
+
+        function activateProject() {
+            // Add active class
+            markActive(currentProject);
+            // Scroll to it if necessary
+            if (!projectIsVisible()) {
+              scrollToActiveProject();
+            }
+        }
 
         function openCurrentProject() {
             var activeProject = projects[currentProject];
@@ -286,6 +295,24 @@
             }
             openCurrentProject();
         });
+
+        function projectIsVisible() {
+          var screenTop = window.scrollY;
+          var screenBottom = window.scrollY + window.innerHeight;
+
+          var activeProject = projects[currentProject];
+          var projectTop = activeProject.offsetTop;
+          var projectBottom = activeProject.offsetTop + activeProject.offsetHeight;
+
+          return (projectTop>=screenTop) && (projectBottom<=screenBottom);
+        }
+
+        function scrollToActiveProject() {
+          var windowHeight = window.innerHeight;
+          var activeProject = projects[currentProject];
+          var projectBottom = activeProject.offsetTop + activeProject.offsetHeight;
+          window.scrollTo(0, projectBottom - windowHeight);
+        }
       })();
     </script>
   </body>
