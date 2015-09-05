@@ -62,8 +62,14 @@
       a {text-decoration: none; color: hsl(36, 78%, 54%);} 
       a:hover {color: #666666;}
 
-      .project { margin-bottom: 2vmax; }
+      .project { margin-bottom: 0vmax; padding: 0.5em 0.2em;}
       .project-title { font-weight: bold; border-bottom: solid 2px; }
+      .active { 
+        background-color: hsl(36, 10%, 96%); 
+        -webkit-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 0px rgba(0, 0, 0, 0.1) inset;
+        -moz-box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 0px rgba(0, 0, 0, 0.1) inset;
+        box-shadow: 0 5px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 0px rgba(0, 0, 0, 0.1) inset;
+      }
 
       .title {
         font-size: 1.5rem;
@@ -162,6 +168,7 @@
       </div>
     </div>
     <script src="js/mustache.min.js"></script>
+    <script src="js/mousetrap.min.js"></script>
     <script id="template" type="x-tmpl-mustache">
       <ul>
       {{#projects}}
@@ -176,44 +183,109 @@
     </script>
 
     <script>
-      var projects = [
-              {title: 'Memory of Place',
-               url: 'http://festivalofcuriosity.ie/index.php/memory-of-place-interactive-audio-map-of-dublin-memories/',
-                    description: 'An app to explore memory and place in Dublin city centre. Interviews about personal memories and the science of memory are triggered by the user\'s location. Available for <a href="https://itunes.apple.com/ie/app/memory-of-place/id1017025207?mt=8&ign-mpt=uo">iOS</a> and <a href="https://play.google.com/store/apps/details?id=com.festivalofcuriosity.memoryplace">Android</a>. Part of the Festival of Curiosity 2015'},
-              {title: 'Segregation in Irish Primary Schools',
-               url: 'http://www.mick.mx/blog/segregation-in-irish-primary-schools.html',
-                    description: 'Another look at the primary school segregation data from <a href="http://www.irishtimes.com/news/education/census-figures-raise-concerns-of-ethnic-segregation-in-schools-1.2114559">The Irish Times</a>.'},
-              {title: 'FFTs & FOTs',
-               url: 'http://www.mick.mx/blog/ffts-fots.html',
-               description: 'Using Fast Fourier Transforms to identify when Tom Scharpling <a href="https://www.youtube.com/watch?v=EcJ0EdH8To8">Bad Company-ed people on The Best Show</a>.'},
-              {title: 'A Day In The Life of the Fringe',
-               url: 'http://www.mick.mx/fringe-2015',
-               description: 'A visualisation of the world\'s biggest arts festival, the Edinburgh fringe. 2014 version <a href="http://www.mick.mx/fringe">here</a>.'},
-              {title: 'MEP Election Results Scotland',
-               url: 'http://www.mick.mx/scottish_meps',
-               description: 'A visualisation of the spread of party support in the 2014 European elections in Scotland.'},
-              {title: 'Dailwatch Radar',
-               url: 'http://www.dailwatch.ie/radar',
-               description: 'A tool to visualise the results of votes in the D&aacute;il (Irish parliament).'},
-              {title: 'Dailwatch Trumps',
-               url: 'http://www.dailwatch.ie/top-trumps',
-               description: 'A top trumps style card game to learn about politicians\' records.'},
-              {title: 'The Wit of The Irish Times',
-               url: 'http://thewitoftheirishtimes.tumblr.com',
-               description: 'A scraper that publishes the shortest letter in The Irish Times everyday. Because the short letters are the funny ones!'},
-              {title: 'News Nerd Jobs',
-               url: 'http://www.mick.mx/newsnerdjobs',
-                    description: 'A slightly easier to read version of the news nerd job listings found <a href="https://docs.google.com/spreadsheet/ccc?key=0AmqohgGX3YQadE1VSktrWG1nNFF6RUFNT1RKa0k0a2c&authkey=CK7OlpsI&hl=en_US#gid=0">here</a>.'},
-
-
-                  ];
 
       // Render project list
       (function () {
+        var projects = [
+                {title: 'Memory of Place',
+                 url: 'http://festivalofcuriosity.ie/index.php/memory-of-place-interactive-audio-map-of-dublin-memories/',
+                      description: 'An app to explore memory and place in Dublin city centre. Interviews about personal memories and the science of memory are triggered by the user\'s location. Available for <a href="https://itunes.apple.com/ie/app/memory-of-place/id1017025207?mt=8&ign-mpt=uo">iOS</a> and <a href="https://play.google.com/store/apps/details?id=com.festivalofcuriosity.memoryplace">Android</a>. Part of the Festival of Curiosity 2015'},
+                {title: 'Segregation in Irish Primary Schools',
+                 url: 'http://www.mick.mx/blog/segregation-in-irish-primary-schools.html',
+                      description: 'Another look at the primary school segregation data from <a href="http://www.irishtimes.com/news/education/census-figures-raise-concerns-of-ethnic-segregation-in-schools-1.2114559">The Irish Times</a>.'},
+                {title: 'FFTs & FOTs',
+                 url: 'http://www.mick.mx/blog/ffts-fots.html',
+                 description: 'Using Fast Fourier Transforms to identify when Tom Scharpling <a href="https://www.youtube.com/watch?v=EcJ0EdH8To8">Bad Company-ed people on The Best Show</a>.'},
+                {title: 'A Day In The Life of the Fringe',
+                 url: 'http://www.mick.mx/fringe-2015',
+                 description: 'A visualisation of the world\'s biggest arts festival, the Edinburgh fringe. 2014 version <a href="http://www.mick.mx/fringe">here</a>.'},
+                {title: 'MEP Election Results Scotland',
+                 url: 'http://www.mick.mx/scottish_meps',
+                 description: 'A visualisation of the spread of party support in the 2014 European elections in Scotland.'},
+                {title: 'Dailwatch Radar',
+                 url: 'http://www.dailwatch.ie/radar',
+                 description: 'A tool to visualise the results of votes in the D&aacute;il (Irish parliament).'},
+                {title: 'Dailwatch Trumps',
+                 url: 'http://www.dailwatch.ie/top-trumps',
+                 description: 'A top trumps style card game to learn about politicians\' records.'},
+                {title: 'The Wit of The Irish Times',
+                 url: 'http://thewitoftheirishtimes.tumblr.com',
+                 description: 'A scraper that publishes the shortest letter in The Irish Times everyday. Because the short letters are the funny ones!'},
+                {title: 'News Nerd Jobs',
+                 url: 'http://www.mick.mx/newsnerdjobs',
+                      description: 'A slightly easier to read version of the news nerd job listings found <a href="https://docs.google.com/spreadsheet/ccc?key=0AmqohgGX3YQadE1VSktrWG1nNFF6RUFNT1RKa0k0a2c&authkey=CK7OlpsI&hl=en_US#gid=0">here</a>.'},
+                    ];
         var template = document.getElementById('template').innerHTML;
         Mustache.parse(template);
         var rendered = Mustache.render(template, { projects: projects });
         document.getElementById('projects').innerHTML = rendered;
+      })();
+
+      (function() {
+        var currentProject;
+        var projects = document.getElementsByClassName('project');
+
+        function markActive(projectNumber) {
+          var project = projects[projectNumber];
+          project.className = project.className + ' active';
+        }
+        
+        function markInactive(project) {
+          project.className = 'project';
+        }
+
+        function deactivateAll() {
+          [].forEach.call(projects, function(project) {
+            markInactive(project);
+          });
+        }
+
+        function incrementProject() {
+          if (typeof currentProject==='undefined') {
+            currentProject = 0;
+          } else {
+            currentProject = (currentProject + 1) % projects.length;
+          }
+        }
+
+        function decrementProject() {
+          if (typeof currentProject==='undefined') {
+            currentProject = projects.length-1;
+          } else {
+            currentProject = (currentProject - 1) % projects.length;
+          }
+          // Deal with negative numbers
+          if ( currentProject<0 ) {
+            currentProject = projects.length + currentProject%projects.length;
+          }
+        }
+
+        Mousetrap.bind('j', function() {
+            deactivateAll();
+            incrementProject();
+            markActive(currentProject);
+        });
+       
+        Mousetrap.bind('k', function() {
+            deactivateAll();
+            decrementProject();
+            markActive(currentProject);
+        });
+
+        function openCurrentProject() {
+            var activeProject = projects[currentProject];
+            var link = activeProject.getElementsByClassName('project-title')[0];
+            var href = link.href;
+            //window.location.replace(href);
+            window.open(href);
+        }
+
+        Mousetrap.bind(['o', 'enter'], function() {
+            if (typeof currentProject==='undefined') {
+              return;
+            }
+            openCurrentProject();
+        });
       })();
     </script>
   </body>
