@@ -1,0 +1,127 @@
+* { box-sizing: border-box; }
+html, body{
+  width:100%;
+  height:100%;
+  margin: 0;
+  padding: 0;
+}
+.header {
+  margin: 2em 0;
+  text-align: center;
+}
+.logo {
+  max-width: 100%;
+}
+.covers {
+  /*display: flex;*/
+  /*flex-wrap: wrap;*/
+  /*list-style: none;*/
+}
+li {
+  /*transition-property: width;*/
+  /*-webkit-transition: all 0.5s ease;*/
+  /*-moz-transition: all 0.5s ease;*/
+  /*-o-transition: all 0.5s ease;*/
+  /*transition: all 0.5s ease;*/
+}
+.issue {
+  display: flex;
+  /*background-color: #eee;*/
+  background-color: #fff;
+  border-top: solid 0.5em gray;
+  padding: 1em 0;
+  margin: 1em 0 3em 0;
+}
+.colors { margin-bottom: 1em; width: 100%; }
+.box { width: 2.77%; border: solid 4px; float: left; }
+
+.cover:hover { outline: solid 4px; }
+
+.issue-1 { border-color: hsl(228, 17%, 5%); }
+.issue-2 { border-color: hsl(228, 17%, 10%); }
+.issue-3 { border-color: hsl(228, 17%, 20%); }
+.issue-4 { border-color: hsl(228, 17%, 5%); }
+.issue-5 { border-color: hsl(228, 17%, 15%); }
+.issue-6 { border-color: hsl(150, 26%, 28%); }
+.issue-7 { border-color: hsl(1, 79%, 44%); }
+.issue-8 { border-color: hsl(330, 97%, 31%); }
+.issue-9 { border-color: hsl(3, 83%, 42%); }
+.issue-10 { border-color: hsl(230, 18%, 23%); }
+.issue-11 { border-color: hsl(33, 86%, 34%); }
+.issue-12 { border-color: hsl(174, 4%, 53%); }
+.issue-13 { border-color: hsl(336, 96%, 50%); }
+.issue-14 { border-color: hsl(149, 24%, 52%); }
+.issue-15 { border-color: hsl(64, 100%, 17%); }
+.issue-16 { border-color: hsl(3, 74%, 27%); }
+.issue-17 { border-color: hsl(110, 3%, 34%); }
+.issue-18 { border-color: hsl(11, 67%, 30%); }
+.issue-19 { border-color: hsl(246, 11%, 51%); }
+.issue-20 { border-color: hsl(124, 50%, 5%); }
+.issue-21 { border-color: hsl(338, 80%, 69%); }
+.issue-22 { border-color: hsl(55, 81%, 38%); }
+.issue-23 { border-color: hsl(55, 81%, 38%); }
+.issue-24 { border-color: hsl(199, 44%, 45%); }
+.issue-25 { border-color: hsl(15, 40%, 52%); }
+.issue-26 { border-color: hsl(141, 14%, 54%); }
+.issue-27 { border-color: hsl(338, 100%, 42%); }
+.issue-28 { border-color: hsl(127, 88%, 29%); }
+.issue-29 { border-color: hsl(358, 94%, 53%); }
+.issue-30 { border-color: hsl(110, 6%, 18%); }
+.issue-31 { border-color: hsl(125, 18%, 45%); }
+.issue-32 { border-color: hsl(151, 100%, 14%); }
+.issue-33 { border-color: hsl(3, 86%, 42%); }
+.issue-34 { border-color: hsl(197, 95%, 44%); }
+.issue-35 { border-color: hsl(112, 15%, 60%); }
+.issue-36 { border-color: hsl(59, 100%, 69%); }
+
+.number-1:hover { outline-color: hsl(228, 17%, 5%); }
+.number-2:hover { outline-color: hsl(228, 17%, 10%); }
+.number-3:hover { outline-color: hsl(228, 17%, 20%); }
+.number-4:hover { outline-color: hsl(228, 17%, 5%); }
+.number-5:hover { outline-color: hsl(228, 17%, 15%); }
+.number-6:hover { outline-color: hsl(150, 26%, 28%); }
+.number-7:hover { outline-color: hsl(1, 79%, 44%); }
+.number-8:hover { outline-color: hsl(330, 97%, 31%); }
+.number-9:hover { outline-color: hsl(3, 83%, 42%); }
+.number-10:hover { outline-color: hsl(230, 18%, 23%); }
+.number-11:hover { outline-color: hsl(33, 86%, 34%); }
+.number-12:hover { outline-color: hsl(174, 4%, 53%); }
+.number-13:hover { outline-color: hsl(336, 96%, 50%); }
+.number-14:hover { outline-color: hsl(149, 24%, 52%); }
+.number-15:hover { outline-color: hsl(64, 100%, 17%); }
+.number-16:hover { outline-color: hsl(3, 74%, 27%); }
+.number-17:hover { outline-color: hsl(110, 3%, 34%); }
+.number-18:hover { outline-color: hsl(11, 67%, 30%); }
+.number-19:hover { outline-color: hsl(246, 11%, 51%); }
+.number-20:hover { outline-color: hsl(124, 50%, 5%); }
+.number-21:hover { outline-color: hsl(338, 80%, 69%); }
+.number-22:hover { outline-color: hsl(55, 81%, 38%); }
+.number-23:hover { outline-color: hsl(55, 81%, 38%); }
+.number-24:hover { outline-color: hsl(199, 44%, 45%); }
+.number-25:hover { outline-color: hsl(15, 40%, 52%); }
+.number-26:hover { outline-color: hsl(141, 14%, 54%); }
+.number-27:hover { outline-color: hsl(338, 100%, 42%); }
+.number-28:hover { outline-color: hsl(127, 88%, 29%); }
+.number-29:hover { outline-color: hsl(358, 94%, 53%); }
+.number-30:hover { outline-color: hsl(110, 6%, 18%); }
+.number-31:hover { outline-color: hsl(125, 18%, 45%); }
+.number-32:hover { outline-color: hsl(151, 100%, 14%); }
+.number-33:hover { outline-color: hsl(3, 86%, 42%); }
+.number-34:hover { outline-color: hsl(197, 95%, 44%); }
+.number-35:hover { outline-color: hsl(112, 15%, 60%); }
+.number-36:hover { outline-color: hsl(59, 100%, 69%); }
+
+.cover-display {
+  display: flex;
+  /*align-items: center;*/
+  /*flex-direction: column;*/
+}
+.cover {
+  cursor: pointer;
+  margin: auto;
+  display: block;
+  /*max-width: 100%;*/
+}
+.cover-title {
+  margin: 0;
+}
