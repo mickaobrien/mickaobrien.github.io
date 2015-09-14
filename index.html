@@ -168,7 +168,9 @@
       </div>
     </div>
     <script src="js/mustache.min.js"></script>
-    <script src="js/mousetrap.min.js"></script>
+    <!--<script src="js/mousetrap.min.js"></script>-->
+    <script src="js/jk.min.js"></script>
+
     <script id="template" type="x-tmpl-mustache">
       <ul>
       {{#projects}}
@@ -221,99 +223,7 @@
         document.getElementById('projects').innerHTML = rendered;
       })();
 
-      (function() {
-        var currentProject;
-        var projects = document.getElementsByClassName('project');
-
-        function markActive(projectNumber) {
-          var project = projects[projectNumber];
-          project.className = project.className + ' active';
-        }
-        
-        function markInactive(project) {
-          project.className = 'project';
-        }
-
-        function deactivateAll() {
-          [].forEach.call(projects, function(project) {
-            markInactive(project);
-          });
-        }
-
-        function incrementProject() {
-          if (typeof currentProject==='undefined') {
-            currentProject = 0;
-          } else {
-            currentProject = (currentProject + 1) % projects.length;
-          }
-        }
-
-        function decrementProject() {
-          if (typeof currentProject==='undefined') {
-            currentProject = projects.length-1;
-          } else {
-            currentProject = (currentProject - 1) % projects.length;
-          }
-          // Deal with negative numbers
-          if ( currentProject<0 ) {
-            currentProject = projects.length + currentProject%projects.length;
-          }
-        }
-
-        Mousetrap.bind('j', function() {
-            deactivateAll();
-            incrementProject();
-            activateProject();
-        });
-       
-        Mousetrap.bind('k', function() {
-            deactivateAll();
-            decrementProject();
-            activateProject();
-        });
-
-        function activateProject() {
-            // Add active class
-            markActive(currentProject);
-            // Scroll to it if necessary
-            if (!projectIsVisible()) {
-              scrollToActiveProject();
-            }
-        }
-
-        function openCurrentProject() {
-            var activeProject = projects[currentProject];
-            var link = activeProject.getElementsByClassName('project-title')[0];
-            var href = link.href;
-            //window.location.replace(href);
-            window.open(href);
-        }
-
-        Mousetrap.bind(['o', 'enter'], function() {
-            if (typeof currentProject==='undefined') {
-              return;
-            }
-            openCurrentProject();
-        });
-
-        function projectIsVisible() {
-          var screenTop = window.scrollY;
-          var screenBottom = window.scrollY + window.innerHeight;
-
-          var activeProject = projects[currentProject];
-          var projectTop = activeProject.offsetTop;
-          var projectBottom = activeProject.offsetTop + activeProject.offsetHeight;
-
-          return (projectTop>=screenTop) && (projectBottom<=screenBottom);
-        }
-
-        function scrollToActiveProject() {
-          var windowHeight = window.innerHeight;
-          var activeProject = projects[currentProject];
-          var projectBottom = activeProject.offsetTop + activeProject.offsetHeight;
-          window.scrollTo(0, projectBottom - windowHeight);
-        }
-      })();
     </script>
+    <script>jk.init({elements: '.project'})</script> 
   </body>
 </html>
