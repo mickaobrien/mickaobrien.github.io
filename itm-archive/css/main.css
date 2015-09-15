@@ -5,6 +5,9 @@ html, body{
   margin: 0;
   padding: 0;
 }
+a {
+  text-decoration: none;
+}
 .header {
   margin: 2em 0;
   text-align: center;
@@ -12,23 +15,16 @@ html, body{
 .logo {
   max-width: 100%;
 }
-.covers {
-  /*display: flex;*/
-  /*flex-wrap: wrap;*/
-  /*list-style: none;*/
-}
-li {
-  /*transition-property: width;*/
-  /*-webkit-transition: all 0.5s ease;*/
-  /*-moz-transition: all 0.5s ease;*/
-  /*-o-transition: all 0.5s ease;*/
-  /*transition: all 0.5s ease;*/
+.intro {
+  font-size: 1.3em;
+  /*text-indent: 10%;*/
 }
 .issue {
   display: flex;
-  /*background-color: #eee;*/
   background-color: #fff;
   border-top: solid 0.5em gray;
+  /*border-left: solid 0.5em gray;*/
+  /*border-bottom: solid 0.5em gray;*/
   padding: 1em 0;
   margin: 1em 0 3em 0;
 }
@@ -112,16 +108,36 @@ li {
 .number-36:hover { outline-color: hsl(59, 100%, 69%); }
 
 .cover-display {
-  display: flex;
-  /*align-items: center;*/
-  /*flex-direction: column;*/
+  /*display: flex;*/
 }
 .cover {
   cursor: pointer;
   margin: auto;
   display: block;
-  /*max-width: 100%;*/
+  max-width: 100%;
 }
 .cover-title {
   margin: 0;
+  opacity: 0.9;
+}
+.season {
+  font-style: italic;
+  opacity: 0.5;
+}
+.pdf-link {
+  display: inline-block;
+  font-weight: bold;
+  background-color: black;
+  color: white;
+  padding: 0.5em;
+  border-radius: 2px;
+  box-shadow: 0px 2px 2px #aaa;
+}
+.pdf-link:active {
+  margin-top: 1px;
+  margin-bottom: -1px;
+  box-shadow: none;
+}
+.pdf-link:hover {
+  color: #eee;
 }
