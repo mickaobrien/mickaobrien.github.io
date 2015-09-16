@@ -18,6 +18,11 @@ a {
 .intro {
   font-size: 1.3em;
 }
+@media (max-width: 550px) {
+  .issue {
+    text-align: center;
+  }
+}
 .issue {
   /*display: flex;*/
   border-top: solid 0.5em gray;
@@ -104,6 +109,7 @@ a {
 .number-36:hover { outline-color: hsl(59, 100%, 69%); }
 
 .cover-display {
+  padding-bottom: 1em;
   /*display: flex;*/
 }
 .cover {
@@ -119,6 +125,7 @@ a {
 .season {
   font-style: italic;
   opacity: 0.5;
+  white-space: nowrap;
 }
 .pdf-link {
   display: inline-block;
