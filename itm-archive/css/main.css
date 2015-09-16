@@ -17,19 +17,15 @@ a {
 }
 .intro {
   font-size: 1.3em;
-  /*text-indent: 10%;*/
 }
 .issue {
-  display: flex;
-  background-color: #fff;
+  /*display: flex;*/
   border-top: solid 0.5em gray;
-  /*border-left: solid 0.5em gray;*/
-  /*border-bottom: solid 0.5em gray;*/
   padding: 1em 0;
   margin: 1em 0 3em 0;
 }
 .colors { margin-bottom: 1em; width: 100%; }
-.box { width: 2.77%; border: solid 4px; float: left; }
+.box { width: 2.77%; border-top: solid 8px; float: left; }
 
 .cover:hover { outline: solid 4px; }
 
