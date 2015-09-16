@@ -144,3 +144,6 @@ a {
 .pdf-link:hover {
   color: #eee;
 }
+.issue-details {
+  text-align: left;
+}
