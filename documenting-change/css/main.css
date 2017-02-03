@@ -1,0 +1,129 @@
+html, body, ul, ol, li, form, fieldset, legend
+{
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p { margin-top: 0; }
+
+fieldset,img { border: 0; }
+
+legend { color: #000; }
+
+li { list-style: none; }
+
+sup { vertical-align: text-top; }
+
+sub { vertical-align: text-bottom; }
+
+table
+{
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td
+{
+  text-align: left;
+  vertical-align: top;
+  font-weight: normal;
+}
+
+input, textarea, select
+{
+  font-size: 110%;
+  line-height: 1.1;
+}
+
+abbr, acronym
+{
+  border-bottom: .1em dotted;
+  cursor: help;
+}
+
+
+.article-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.article {
+  margin: 1%;
+  padding: 1%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 2px rgba(0,0,0,0.19), 0 2px 2px rgba(0,0,0,0.23)
+}
+
+@media all and (min-width: 699px) {
+  .article {
+    width: 29%;
+  }
+}
+
+@media all and (max-width: 699px) and (min-width: 520px) {
+  .article {
+    width: 46%;
+  }
+}
+
+@media all and (max-width: 520px) {
+  .article {
+    width: 96%;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.date {
+  font-style: italic;
+}
+
+.publication {
+  font-size: 1.1em;
+}
+
+.read-link {
+  text-align: center;
+  margin: 1em 0.25em;
+  border: solid 1px hsl(357, 77%, 52%);
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #5a5a5a;
+}
+
+.read-link:hover {
+  background-color: hsl(357, 77%, 52%);
+  color: white;
+}
+
+.metadata {
+  margin-top: auto;
+}
+
+.tags {
+  list-style: none;
+  display: flex;
+}
+
+.tag {
+  border: solid 1px #F5F5F5;
+  margin-right: 0.5em;
+  padding: 0.5em;
+  white-space: nowrap;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #F5F5F5;
+}
+
+.tag:hover, .tag.active {
+  background-color: hsl(357, 77%, 32%);
+  color: #F5F5F5;
+}
