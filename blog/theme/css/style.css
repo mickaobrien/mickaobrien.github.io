@@ -292,7 +292,7 @@ section#posts p.paginator {
   border-top: #eeeeee 1px solid;
 }
 section#posts article {
-  margin: 0;
+  margin: 0 auto;
   padding: 2em 1em;
   position: relative;
   font-size: 2em;
