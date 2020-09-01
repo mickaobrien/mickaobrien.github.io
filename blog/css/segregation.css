@@ -29,12 +29,14 @@
   width: 20%;
   padding: 0;
   height: 1px;
+  position: relative;
 }
 .bar {
   display: block;
   background-color: hsl(0, 50%, 27%);
   height: 100%;
   float: left;
+  position: absolute;
 }
 
 .line {
