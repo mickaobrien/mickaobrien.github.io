@@ -161,23 +161,13 @@ var SS;
             var propNonIrish = numNonIrish/total;
             var percNonIrish = formatPercentage(numNonIrish/total);
 
-            var diff = propNonIrish - districtNonIrish;
-            var left = (diff>0) ? '50%' : formatPercentage(0.5 + diff);
-            //var color;
-            //color = 'hsl(0, ' + formatPercentage(Math.abs(diff)*2) + ', 50%)';
-            //if (diff>0) {
-                //color = 'hsl(240, ' + formatPercentage(diff) + ', 50%)';
-            //} else {
-                //color = 'hsl(120, ' + formatPercentage(-diff) + ', 50%)';
-            //}
-
             tbl = tbl.concat(['<tr>',
                               '<td>', getSchoolName(school.name), '</td>',
                               '<td data-title="Students">', total, '</td>',
                               '<td data-title="% Non-Irish">', percNonIrish, '</td>',
                               '<td class="bar-cell">', 
                                 '<span class="bar" style="width: ', propNonIrish*100, '%;"></span>',
-                                '<span class="line" style="left: ', (-diff)*100, '%;"></span>',
+                                '<span class="line" style="left: ', (districtNonIrish)*100, '%;"></span>',
                               '</td>',
                               '</tr>'
                               ]);

@@ -42,7 +42,7 @@
 .line {
   border-left: dashed 2px #eee;
   width: 1px;
-  position: relative;
+  position: absolute;
   float: left;
   z-index: 1;
   height: 100%;
