@@ -30,13 +30,9 @@
             var map = L.mapbox.map('map');
             map.zoomControl.removeFrom(map);
             map.setView([55.953100, -3.188900], 13);
-            //map.zoomControl = false;
             this.disableInteractivity(map);
-            //var stamenLayer = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png', {
-                  //attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
-            //}).addTo(map);
-            var customLayer = L.mapbox.tileLayer('-mick-.j15dkof3', {
-                  attribution: 'Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
+            var stamenLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                  attribution: 'Map tiles and data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.'
             }).addTo(map);
 
             this.map = map;

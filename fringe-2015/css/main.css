@@ -262,3 +262,7 @@ circle {
   opacity: 0.8;
   cursor: pointer;
 }
+
+.leaflet-tile-container {
+  opacity: 0.6;
+}
